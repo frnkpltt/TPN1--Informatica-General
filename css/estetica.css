@@ -1,0 +1,105 @@
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Fondo general del sitio: la imagen se ve alrededor del contenedor, hay que armar un collage para poner de fodo*/
+body {
+  background-color: #660503;
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+
+  padding: 2rem 1rem;
+}
+
+/* Contenedor solido que envuelve todo el contenido del body */
+.contenedor {
+  background-color: #1b4a73;
+
+  max-width: 75rem;
+  width: 90%;
+  margin: 0 auto;
+
+  padding: 1.5rem;
+}
+.titulo-curvo, h1 {
+  width: 100%;
+  max-width: 50rem;
+  display: block;
+  margin: 0 auto;
+}
+
+.titulo-curvo text, h1 {
+  font-family: "Milonga", serif;
+  font-weight: 550;
+  font-style: normal;
+  font-size: 3.5rem;
+  fill: #f6b40e;
+}
+
+/* 
+   Menu de navegacion
+    */
+nav {
+  background-color: #660503;
+  padding: 1rem;
+}
+
+nav ul {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 2rem;
+  list-style: none;
+}
+
+nav a {
+  font-family: "Arvo", serif;
+  font-weight: 400;
+  font-style: normal;
+  color: #f6b40e;
+  text-decoration: none;
+}
+/* 
+   Seccion de introduccion
+    */
+.intro, section {
+  background-color: #1e4d1b;
+  padding: 1.5rem;
+  margin-top: 1.5rem;
+
+}
+ 
+.intro p  {
+  font-family: "Milonga", serif;
+  font-weight: 400;
+  font-style: normal;
+  color: #f6b40e;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+ article  {
+  color: #f6b40e;
+  margin-bottom: 1rem;
+    display: flex;
+ flex-direction: row;
+  justify-content: center;
+}
+section a  {
+    color: #f6b40e;
+    margin-bottom: 1rem;
+    display: flex;
+ flex-direction: row;
+  justify-content: center;
+}
+article img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
