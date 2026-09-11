@@ -6,8 +6,8 @@
     <title>pag principal</title>
     <link rel="stylesheet" href="css/estetica.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Milonga&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Arvo:wght@400;700&family=Milonga&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Milonga&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Arvo:wght@400;700&family=Milonga&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -28,11 +28,9 @@
                 <li><a href="index.html">Inicio</a></li>
                 <li><a href="integrantes.html">Integrantes</a></li>
                 <li><a href="ranking.html">Rankings</a></li>
-                </ul>
+            </ul>
         </nav>
     </header>
-
-    
 
 <main>
 
@@ -50,29 +48,28 @@ Conocerla en su diversidad, más que reducirla a una sola imagen, es también un
     para que siempre se tenga presente todo lo que nos representa como argentinos. </p>
 </section>
 
+<!--
+  antes este bloque estaba partido en 3 <article> que podian ser compactados en section con cada article
+  como tarjeta de juego.Quedó como un solo <article> por juego,
+  con todo adentro (título + imagen + botón). Para sumar los otros dos
+  juegos, se duplica este mismo <article class="tarjeta-juego"> y se
+  cambia el h2, el src/alt de la imagen y el href del link.
+-->
 <section class="juegos">
-  <article class="primer-juego">
-<h2> JUEGO DE PREGUNTAS</h2><!--titulo -->
-<!-- FOTO  --> 
-</article>
 
-<article class="foto-juego">
-    <img src="img/cartas.webp" alt="cartas">
-    </article>
-  <article boton-jugar> <a href="juego1.html">Click para jugar</a>
-</article> 
+  <article class="tarjeta-juego">
+    <h2>Juego de Cartas</h2>
+    <img src="img/cartas.webp" alt="Cartas del juego de Quién es Quién">
+    <a href="juego1.html" class="boton-jugar">Click para jugar</a>
+  </article>
 
+  <!-- TODO: acá van los otros dos <article class="tarjeta-juego"> (dados y preguntas) cuando estén listos -->
 
 </section>
 
 </main>
 
-
-
-
-
-
 </div>
-   
+
 </body>
 </html>

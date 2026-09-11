@@ -83,23 +83,59 @@ nav a {
   flex-direction: row;
   justify-content: center;
 }
- article  {
+ /*
+ aca saque el <article> porque aplicaba el estilo a todos los <article>, incluyendo los futuros. 
+ Lo pasamos a la clase .tarjeta-juego para que solo afecte a las tarjetas de juego de esa seccion
+ y tengamos mas control. 
+ */
+
+.tarjeta-juego {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
   color: #f6b40e;
   margin-bottom: 1rem;
-    display: flex;
- flex-direction: row;
-  justify-content: center;
 }
-section a  {
-    color: #f6b40e;
-    margin-bottom: 1rem;
-    display: flex;
- flex-direction: row;
-  justify-content: center;
+
+.tarjeta-juego h2 {
+  font-family: "Milonga", serif;
+  font-size: 1.8rem;
+}
+
+/*
+mismo motivo que arriba. El <section> afectaba a cualquier link dentro de cualquier section,
+ahora es una clase puntual para el boton
+*/
+
+.boton-jugar {
+  display: inline-block;
+  background-color: #660503;
+  color: #f6b40e;
+  font-family: "Arvo", serif;
+  text-decoration: none;
+  padding: 0.6rem 1.5rem;
+  border-radius: 4px;
+  transition: transform 0.15s;
+}
+
+.boton-jugar:hover {
+  transform: translateY(-2px);
 }
 article img {
   max-width: 100%;
   height: auto;
   display: block;
   margin: 0 auto;
+}
+
+/* 
+Esta la dejamos genérica a propósito: es solo una regla defensiva para
+que ninguna imagen dentro de un article se desborde, no fuerza ningún
+layout como hacía el "article" viejo 
+*/
+
+.tarjeta-juego img {
+  width: 220px;
+  border-radius: 8px;
 }
