@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quién es Quién</title>
+    <link rel="stylesheet" href="css/estetica.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Milonga&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Arvo:wght@400;700&family=Milonga&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="contenedor">
+        <header>
+            <svg viewBox="0 0 800 150" class="titulo-curvo">
+                <defs>
+                    <path id="curva-titulo" d="M 50 100 Q 400 20 750 100" />
+                </defs>
+                <text>
+                    <textPath href="#curva-titulo" startOffset="50%" text-anchor="middle">
+                                QUIÉN ES QUIÉN
+                    </textPath>
+                </text>
+            </svg>
+            
+            <nav>
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="integrantes.html">Integrantes</a></li>
+                    <li><a href="ranking.html">Rankings</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main>
+
+            <section class="reglas">
+                <h2>¿Cómo se juega?</h2>
+                <p>La computadora eligió un personaje secreto de entre las 25 cartas. 
+                    Elegí una pregunta del desplegable y apreta "Preguntar"para saber si el personaje secreto cumple esa caracteristica.
+                    Con esa respuesta, tocá las cartas que a vos te parezca que no cumplen con la caracteristica. Cuando sepas bien (o no tanto) 
+                    quien es, usa el segundo desplegable. 
+                </p>
+            </section>
+
+            <section class="preguntas">
+                <select id="select-prguntas">
+                    <option value="">Elegí una pregunta...</option>
+                </select>
+                <button id="btn-preguntar" class="boton-jugar">Preguntar</button>
+                <p id="respuesta"></p>
+            </section>
+
+            <!-- Las 25 cartas se generan con js (create element) a partir del array de personajes
+             por eso no estan escritas aca
+             -->
+             <section class="tablero" id="tablero"></section>
+
+            <section class="adivinar">
+                <select id="select-personaje">
+                    <option value="">¿Quién creés que es?</option>
+                    <!-- toda una <option> por personaje-->
+                </select>
+                <button id="btn-adivinar" class="boton-jugar">¡Adivinar!</button>
+                <p id="resultado-final"></p>
+            </section>
+
+        </main>
+
+    </div>
+
+<script src="js/qesq.js""></script>
+</body>
+
+</html>
