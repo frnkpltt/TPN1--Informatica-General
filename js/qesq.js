@@ -103,6 +103,7 @@ const btnPreguntar = document.getElementById('btn-preguntar');
 const btnAdivinar = document.getElementById('btn-adivinar');
 const respuestaEl = document.getElementById('respuesta');
 const resultadoFinalEl = document.getElementById('resultado-final');
+const btnReiniciar = document.getElementById('btn-reiniciar');
 
 
 // arma el tablero; una carta por personaje (createElement, igual que en la practica 41)
@@ -136,8 +137,8 @@ personajes.forEach(personaje => {
 });
  
 // Elige el personaje secreto al azar entre los 25
-const indiceSecreto = Math.floor(Math.random() * personajes.length);
-const personajeSecreto = personajes[indiceSecreto];
+let indiceSecreto = Math.floor(Math.random() * personajes.length);
+let personajeSecreto = personajes[indiceSecreto];
  
 // TODO: btnPreguntar -> leer selectPregunta.value (el nombre del atributo)
 // y usar personajeSecreto[valor] con corchetes para responder Sí/No en respuestaEl
@@ -175,4 +176,29 @@ btnAdivinar.addEventListener('click', () => {
     selectPregunta.disabled = true;
     selectPersonaje.disabled = true;
 });
-console.log(personajes.length)   
+
+btnReiniciar.addEventListener('click', () => {
+  // Elige un nuevo personaje secreto
+  indiceSecreto = Math.floor(Math.random() * personajes.length);
+  personajeSecreto = personajes[indiceSecreto];
+
+  // Destapa todas las cartas descartadas de un saque
+  const cartasDescartadas = document.querySelectorAll('.descartada');
+  cartasDescartadas.forEach(carta => {
+    carta.classList.remove('descartada');
+  });
+
+  // Limpia los mensajes
+  respuestaEl.textContent = '';
+  resultadoFinalEl.textContent = '';
+
+  // Vuelve los selects a la opción vacía
+  selectPregunta.value = '';
+  selectPersonaje.value = '';
+
+  // Rehabilita todo lo que quedó bloqueado al adivinar
+  btnPreguntar.disabled = false;
+  btnAdivinar.disabled = false;
+  selectPregunta.disabled = false;
+  selectPersonaje.disabled = false;
+});
