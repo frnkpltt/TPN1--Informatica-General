@@ -93,7 +93,9 @@ const personajes = [
         esPolitico: false, esArtista: false
     }
 ]
-
+// Puntaje acumulado de aciertos en la sesión — reiniciar arma una ronda
+// nueva pero NO resetea esto, es un contador de toda la partida
+let puntaje = 0;
 
 // Referencias del DOM
 const tablero = document.getElementById('tablero');
@@ -104,7 +106,7 @@ const btnAdivinar = document.getElementById('btn-adivinar');
 const respuestaEl = document.getElementById('respuesta');
 const resultadoFinalEl = document.getElementById('resultado-final');
 const btnReiniciar = document.getElementById('btn-reiniciar');
-
+const puntajeEl = document.getElementById('puntaje');
 
 // arma el tablero; una carta por personaje (createElement, igual que en la practica 41)
 
@@ -164,11 +166,11 @@ btnAdivinar.addEventListener('click', () => {
     }
 
     if (nombreElegido === personajeSecreto.nombre) {
-        resultadoFinalEl.textContent = '¡Correcto! Era' 
-        + personajeSecreto.nombre + '.';
+            puntaje++;
+            puntajeEl.textContent = puntaje;
+            resultadoFinalEl.textContent = '¡Correcto! Era ' + personajeSecreto.nombre + '.';
     } else {
-        resultadoFinalEl.textContent = 'Incorrecto. Era' 
-        + personajeSecreto.nombre + '.';
+            resultadoFinalEl.textContent = 'Incorrecto. Era ' + personajeSecreto.nombre + '.';
     }
 
     btnPreguntar.disabled = true;
