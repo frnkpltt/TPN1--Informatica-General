@@ -134,8 +134,76 @@ Esta la dejamos genérica a propósito: es solo una regla defensiva para
 que ninguna imagen dentro de un article se desborde, no fuerza ningún
 layout como hacía el "article" viejo 
 */
-
+/* =====================================
+    Juego de cartas: Quién es Quién
+   ===================================== */
 .tarjeta-juego img {
   width: 220px;
   border-radius: 8px;
+}
+
+.reglas p {
+  font-family: "Arvo", serif;
+  color: #f6b40e;
+}
+
+.preguntas, 
+.adivinar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+select {
+  font-family: "Arvo", serif;
+  padding: 0.5rem;
+  border-radius: 4px;
+  border: none;
+}
+
+#respuesta, 
+#resultado-final {
+  font-family: "Arvo", serif;
+  color: #f6b40e;
+  font-weight: 700;
+}
+
+.tablero {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.carta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100px;
+  background-color: #1b4a73;
+  padding: 0,5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.carta img {
+  width: 90px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.carta p {
+  font-family: "Arvo", serif;
+  font-size: 0.75rem;
+  color: #f6b40e;
+  text-align: center;
+  margin-top: 0.3rem;
+}
+
+/* esta es la clase que el js agrega/saca con classList.toggle() cada vez que tocas una carta para descartarla */
+.carta.descartada {
+  opacity: 0.25;
 }
