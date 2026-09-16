@@ -145,12 +145,19 @@ layout como hacía el "article" viejo
 .reglas p {
   font-family: "Arvo", serif;
   color: #f6b40e;
+  margin-top: 20px;
+  font-weight: 700;
+}
+
+.reglas h2 {
+  font-family: "Arvo", serif;
+  color: aqua;
 }
 
 .preguntas, 
 .adivinar {
   display: flex;
-  align-items: center;
+  align-items: ceneter;
   flex-wrap: wrap;
   gap: 1rem;
 }
