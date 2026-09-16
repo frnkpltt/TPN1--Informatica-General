@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rankings</title>
+    <link rel="stylesheet" href="css/estetica.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Milonga&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Arvo:wght@400;700&family=Milonga&display=swap" rel="stylesheet">
+</head>
+
+<body>
+   <div class="contenedor">
+    <header>
+       <svg viewBox="0 0 800 150" class="titulo-curvo">
+  <defs>
+    <path id="curva-titulo" d="M 50 100 Q 400 20 750 100" />
+  </defs>
+  <text>
+    <textPath href="#curva-titulo" startOffset="50%" text-anchor="middle">
+      RANKINGS
+    </textPath>
+  </text>
+</svg>
+        <nav>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="integrantes.html">Integrantes</a></li>
+                <li><a href="ranking.html">Rankings</a></li>
+            </ul>
+        </nav>
+    </header>
+
+<main>
+
+  <section class="reglas">
+    <h2>Récords</h2>
+    <p>Estos son los mejores puntajes guardados en este navegador, uno por
+      cada juego del sitio.</p>
+  </section>
+
+  <!-- Los tres <p id="..."> los completa el JS leyendo localStorage.
+       Arrancan con "Cargando..." para no mostrar nada vacío mientras
+       corre el script. -->
+  <section class="rankings">
+
+    <article class="tarjeta-record">
+      <h2>Juego de Cartas</h2>
+      <p id="record-cartas">Cargando...</p>
+    </article>
+
+    <article class="tarjeta-record">
+      <h2>Juego de Dados</h2>
+      <p id="record-dados">Cargando...</p>
+    </article>
+
+    <article class="tarjeta-record">
+      <h2>Juego de Preguntas</h2>
+      <p id="record-preguntas">Cargando...</p>
+    </article>
+
+  </section>
+
+</main>
+
+</div>
+
+<script src="ranking.js"></script>
+</body>
+</html>

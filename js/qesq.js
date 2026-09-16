@@ -171,6 +171,11 @@ btnAdivinar.addEventListener('click', () => {
             resultadoFinalEl.textContent = '¡Correcto! Era ' + personajeSecreto.nombre + '.';
     } else {
             resultadoFinalEl.textContent = 'Incorrecto. Era ' + personajeSecreto.nombre + '.';
+            // Chequea y actualiza el récord al perder
+            const recordGuardado = Number(localStorage.getItem('recordCartas') || 0);
+            if (puntaje > recordGuardado) {
+                localStorage.setItem('recordCartas', puntaje);
+            }
     }
 
     btnPreguntar.disabled = true;
