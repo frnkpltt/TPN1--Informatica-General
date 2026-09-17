@@ -215,3 +215,37 @@ select {
 .carta.descartada {
   opacity: 0.25;
 }
+
+/* ================================================================
+                        Pagina de rankings 
+   ================================================================ */
+
+   .rankings {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+   }
+
+   .tarjeta-record {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: #1b4a73;
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    color: #f6b40e;
+    min-width: 160px;
+   }
+
+   .tarjeta-record h2 {
+    font-family: "Milonga", serif;
+    font-size: 1.3rem;
+   }
+
+   .tarjeta-record p {
+    font-family: "Arvo", serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+   }
