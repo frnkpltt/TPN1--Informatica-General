@@ -5,92 +5,93 @@
 const personajes = [
     {
         nombre: 'Belgrano', foto: 'img/cartas/belgrano.png', esMujer: false, esArgentino: true, esMusico: false, esFiguraDeEspectaculo: false, 
-        esDeportista: false, sigueConVida: false, esPersonajeDeFiccion: false, esPolitico: true, esEmpresario: false, esArtista: false
+        esDeportista: false, sigueConVida: false, esPersonajeDeFiccion: false, esPolitico: true, esEmpresario: false, esArtista: false, 
+        esGay: true
     },
     {   
         nombre: 'Moria Casán', foto: 'img/cartas/moria.png', esMujer: true, esArgentino: true, esMusico: false, 
         esFiguraDeEspectaculo: true, esDeportista: false, esEmpresario: true, sigueConVida: true, esPersonajeDeFiccion: false, esPolitico: false, 
-        esArtista: true 
+        esArtista: true, esGay: true
     },
     {
         nombre: 'Charly Garcia', foto: 'img/cartas/charly.png', esMujer: false, esArgentino: true, esMusico: true, 
         esFiguraDeEspectaculo: false, esDeportista: false, esEmpresario: false, sigueConVida: true, esPersonajeDeFiccion: false, esPolitico: false,
-        esArtista: true
+        esArtista: true, esGay: true
     },
     {
         nombre: 'cristina Kirchner', foto: 'img/cartas/cristina.png', esMujer: true, esArgentino:true, esMusico: false, 
         esFiguraDeEspectaculo: false, esDeportista: false, esEmpresario: false, sigueConVida: true, esPersonajeDeFiccion: false, esPolitico: true, 
-        esArtista: false
+        esArtista: false, esGay: false
     }, 
     {
         nombre: 'Dalí', foto: 'img/cartas/dali.png', esMujer: false, esArgentino: false, esMusico:false, 
         esFiguraDeEspectaculo: false, esDeportista: false, esEmpresario: false, sigueConVida:false, esPersonajeDeFiccion: false, esPolitico:false, 
-        esArtista: true
+        esArtista: true, esGay: false
     },
     {
         nombre: 'DiCaprio', foto: 'img/cartas/dicaprio.png', esMujer: false, esArgentino: false, esMusico:false, 
         esFiguraDeEspectaculo:true, esDeportista: false, esEmpresario: true, sigueConVida: true, esPersonajeDeFiccion: false, esPolitico: false, 
-        esArtista: true
+        esArtista: true, esGay: false
     }, 
     {
         nombre: 'Fito Paez', foto: 'img/cartas/fitopaez.png', esMujer: false, esArgentino: true, esMusico: true,
         esFiguraDeEspectaculo: false, esDeportista: false, esEmpresario: false, sigueConVida:true, esPersonajeDeFiccion: false, esPolitico: false, 
-        esArtista: true
+        esArtista: true, esGay: true
     }, 
     {
         nombre: 'Freddy Mercury', foto: 'img/cartas/freddy.png', esMujer: false, esArgentino: false, esMusico: true,
         esFiguraDeEspectaculo: true, esDeportista: false, esEmpresario: false, sigueConVida: false, esPersonajeDeFiccion: false, esPolitico: false, 
-        esArtista: true
+        esArtista: true, esGay: true
     }, 
     {
         nombre: 'Frida Kahlo', foto: 'img/cartas/frida.png', esMujer: true, esArgentino: false, esMusico: false, 
         esFiguraDeEspectaculo: false, esDeportista: false, esEmpresario: false, sigueConVida: false, esPersonajeDeFiccion: false, esPolitico: false, 
-        esArtista: true
+        esArtista: true, esGay: false
     },
     {
         nombre: 'Indio Solari', foto: 'img/cartas/indio.png', esMujer: false, esArgentino: true, esMusico: true, 
         esFiguraDeEspectaculo: false, esDeportista: false, esEmpresario: false, sigueConVida: false, esPersonajeDeFiccion: false,
-        esPolitico: false, esArtista: true
+        esPolitico: false, esArtista: true, esGay: false
     }, 
     {
         nombre: 'Jesus', foto: 'img/cartas/jesus.png', esMujer: false, esArgentino: false, esMusico: false, 
         esFiguraDeEspectaculo: true, esDeportista: false, esEmpresario: false, sigueConVida: false, esPersonajeDeFiccion: true,
-        esPolitico: false
+        esPolitico: false, esGay: true
     },
     {
         nombre: 'John Lennon', foto: 'img/cartas/johnlennon.png', esMujer: false, esArgentino: false, esMusico: true, 
         esFiguraDeEspectaculo: false, esDeportista: false, esEmpresario: false, sigueConVida: false, esPersonajeDeFiccion: false,
-        esPolitico: false, esArtista: true
+        esPolitico: false, esArtista: true, esGay: true
     }, 
     {
         nombre: 'Julieta Venegas', foto: 'img/cartas/julietavenegas.png', esMujer: true, esArgentino: false, esMusico: true,
         esFiguraDeEspectaculo: true, esDeportista: false, esEmpresario: false, sigueConVida: true, esPersonajeDeFiccion: false,
-        esPolitico: false, esArtista: true
+        esPolitico: false, esArtista: true, esGay: false
     }, 
     {
         nombre: 'Lali Esposito', foto: 'img/cartas/lali.png', esMujer: true, esArgentino: true, esMusico: true, 
         esFiguraDeEspectaculo: true, esDeportista: false, esEmpresario: false, sigueConVida: true, esPersonajeDeFiccion: false, 
-        esPolitico: false, esArtista: true
+        esPolitico: false, esArtista: true, esGay: true
     }, 
     {
         nombre: 'La Mona Gimenez', foto: 'img/cartas/lamona.png', esMujer: false, esArgentino: true, esMusico: true, 
         esFiguraDeEspectaculo: true, esDeportista: false, esEmpresario: false, sigueConVida: true, esPersonajeDeFiccion: false,
-        esPolitico: false, esArtista: true
+        esPolitico: false, esArtista: true, esGay: true
     }, 
     {
         nombre: 'la negra vernaci', foto: 'img/cartas/lanegra.png', esMujer: true, esArgentino: true, esMusico: false, 
         esFiguraDeEspectaculo: true, esDeportista: false, esEmpresario: false, sigueConVida: true, esPersonajeDeFiccion: false,
-        esPolitico: false, esArtista: false
+        esPolitico: false, esArtista: false, esGay: true
     }, 
     {
         nombre: 'Maddona', foto: 'img/cartas/maddona.png', esMujer: true, esArgentino: false, esMusico: true, 
         esFiguraDeEspectaculo: true, esDeportista: false, esEmpresario: false, sigueConVida: true, esPersonajeDeFiccion: false,
-        esPolitico: false, esArtista: true
+        esPolitico: false, esArtista: true, esGay: true
     },
     {
         nombre: 'Noe Custodio', foto: 'img/cartas/noecustodio.png', esMujer: true, esArgentino: true, esMusico: false, 
         esFiguraDeEspectaculo: true, esDeportista: false, esEmpresario: false, sigueConVida: true, esPersonajeDeFiccion: false,
-        esPolitico: false, esArtista: false
+        esPolitico: false, esArtista: false, esGay: true
     }
 ]
 // Puntaje acumulado de aciertos en la sesión — reiniciar arma una ronda
