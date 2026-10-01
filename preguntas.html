@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quién es Quién</title>
+    <link rel="stylesheet" href="css/estetica.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Milonga&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Arvo:wght@400;700&family=Milonga&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="contenedor">
+        <header>
+            <svg viewBox="0 0 800 150" class="titulo-curvo">
+                <defs>
+                    <path id="curva-titulo" d="M 50 100 Q 400 20 750 100" />
+                </defs>
+                <text>
+                    <textPath href="#curva-titulo" startOffset="50%" text-anchor="middle">
+                                CUAN ARGENTINO SOS?
+                    </textPath>
+                </text>
+            </svg>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="integrantes.html">Integrantes</a></li>
+                    <li><a href="ranking.html">Rankings</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main>
+         <section class="reglas">
+                <h2>¿Cómo se juega?</h2>
+                <p>El juego te va a hacer 15 preguntas, una por una. Cada pregunta tiene 3 opciones de respuesta: 2 incorrectas y 1 correcta.
+                Tenés un tiempo límite para responder cada una, así que estate atento al reloj! Podés equivocarte hasta 2 veces, a la tercera,
+                el juego termina y podés volver a intentarlo las veces que quieras. Abajo vas a ver un contador con la cantidad de preguntas que 
+                acertaste y las que fallaste, para que puedas seguir tu progreso en cada partida.
+                </p>
+                <p>Puntaje: <span id="puntaje">0</span></p>
+            </section>
+            <section class="intro-juego">
+    
+
+<section class="juego" id="juego-preguntas">
+
+    <!-- Estado actual de la partida -->
+    <div class="estado-juego">
+        <p id="contador-ronda">Pregunta 1 de 15</p>
+        <p id="timer">Tiempo: 15</p>
+        <p id="contador-aciertos">Aciertos: 0</p>
+        <p id="contador-errores">Errores: 0 / 3</p>
+    </div>
+
+    <!-- Pregunta actual -->
+    <div class="pregunta-actual" id="pregunta-actual">
+        <p id="texto-pregunta">Cargando pregunta...</p>
+
+        <div class="opciones" id="opciones-respuesta">
+            <button class="opcion" id="opcion-0"></button>
+            <button class="opcion" id="opcion-1"></button>
+            <button class="opcion" id="opcion-2"></button>
+        </div>
+    </div>
+
+    <!-- Pantalla de fin de juego (oculta hasta que termine la partida) -->
+    <div class="resultado-final" id="resultado-final" hidden>
+        <h2>¡Juego terminado!</h2>
+        <p id="mensaje-final"></p>
+        <button id="btn-jugar-de-nuevo">Jugar de nuevo</button>
+    </div>
+
+</section>
+
+
+            <script src="js/preg.js"></script>
+        </body>
