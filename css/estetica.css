@@ -79,9 +79,50 @@ nav a {
   font-style: normal;
   color: #f6b40e;
   margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.intro > article:first-child p {
+  text-align: center;
+}
+
+/*Sección de integrantes*/
+.integrante {
   display: flex;
-  flex-direction: row;
-  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  margin: 1.5rem 0;
+}
+
+.integrante article {
+  flex: 1;
+  min-width: 0;
+}
+
+.integrante h2 {
+  font-family: "Milonga", serif;
+  color: #f6b40e;
+  margin-bottom: 0.5rem;
+}
+
+.integrante img {
+  display: block;
+  width: min(30%, 240px);
+  max-height: 280px;
+  height: auto;
+  object-fit: contain;
+}
+
+@media (max-width: 600px) {
+  .integrante {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .integrante img {
+    width: min(100%, 240px);
+    align-self: center;
+  }
 }
  /*
  aca saque el <article> porque aplicaba el estilo a todos los <article>, incluyendo los futuros. 
