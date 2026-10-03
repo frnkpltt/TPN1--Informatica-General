@@ -124,6 +124,32 @@ nav a {
     align-self: center;
   }
 }
+
+/*Juego de dados*/
+.reglasdados {
+  font-family: "Milonga";
+  margin-top: 1rem;
+  color: #f6b40e;
+}
+
+.dados {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+  font-size: 4rem;
+}
+
+.seccionjuego {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin: 1.5rem 0;
+  font-family: "Milonga";
+  color: #f6b40e;
+}
+
+
  /*
  aca saque el <article> porque aplicaba el estilo a todos los <article>, incluyendo los futuros. 
  Lo pasamos a la clase .tarjeta-juego para que solo afecte a las tarjetas de juego de esa seccion
@@ -185,14 +211,14 @@ layout como hacía el "article" viejo
 
 .reglas p {
   font-family: "Arvo", serif;
-  color: #660503;
+  color: #d32222;
   margin-top: 20px;
   font-weight: 700;
 }
 
 .reglas h2 {
   font-family: "Arvo", serif;
-  color: #1b4a73;
+  color: #2700d3;
   
 }
 
