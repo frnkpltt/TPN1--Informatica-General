@@ -87,6 +87,11 @@ nav a {
 }
 
 /*Sección de integrantes*/
+.integrantes-lista {
+  width: min(100%, 54rem);
+  margin: 0 auto;
+}
+
 .integrante {
   display: flex;
   align-items: center;
