@@ -1,5 +1,12 @@
+/* ===========================================
+   preguntas.js
+   Juego "Cuán argentino sos?" - categoria geografia
+   =========================================== */
+
+/*  Variables globales del estado del juego */
+
 let rondaActual = 1;
-const totalRondas = 15;
+const totalRondas = 20;
 
 let aciertos = 0;
 let errores = 0;
@@ -10,10 +17,14 @@ let intervaloTimer = null;
 
 let preguntaActual = null;
 
+/* Referencias al DOM*/
 
+const pantallaInicio = document.querySelector("#pantalla-inicio");
+const btnEmpezarJuego = document.querySelector("#btn-empezar-juego");
+
+const estadoJuegoDiv = document.querySelector("#estado-juego");
 const contadorRonda = document.querySelector("#contador-ronda");
 const timerTexto = document.querySelector("#timer");
-const contadorAciertos = document.querySelector("#contador-aciertos");
 const contadorErrores = document.querySelector("#contador-errores");
 
 const textoPregunta = document.querySelector("#texto-pregunta");
@@ -24,74 +35,94 @@ const opcion2 = document.querySelector("#opcion-2");
 const preguntaActualDiv = document.querySelector("#pregunta-actual");
 const resultadoFinalDiv = document.querySelector("#resultado-final");
 const mensajeFinal = document.querySelector("#mensaje-final");
+const puntajeFinal = document.querySelector("#puntaje");
 const btnJugarDeNuevo = document.querySelector("#btn-jugar-de-nuevo");
-
-/*  trae una pregunta de geografia desde Georef  */
+ */
 
 async function obtenerPreguntaGeografia() {
-  // Traemos 50 localidades al azar (con su provincia incluida)
-  const respuestaLocalidades = await fetch("https://apis.datos.gob.ar/georef/api/localidades?max=50&campos=nombre,provincia");
-  const datosLocalidades = await respuestaLocalidades.json();
-  const localidades = datosLocalidades.localidades;
+  try {
+    // Traemos 50 localidades al azar (con su provincia incluida)
+    const respuestaLocalidades = await fetch("https://apis.datos.gob.ar/georef/api/localidades?max=50&campos=nombre,provincia");
+    const datosLocalidades = await respuestaLocalidades.json();
+    const localidades = datosLocalidades.localidades;
 
-  // elegimos UNA localidad al azar
-  const indiceAlAzar = Math.floor(Math.random() * localidades.length);
-  const localidadElegida = localidades[indiceAlAzar];
+    // Elegimos UNA localidad al azar
+    const indiceAlAzar = Math.floor(Math.random() * localidades.length);
+    const localidadElegida = localidades[indiceAlAzar];
 
-  const nombreLocalidad = localidadElegida.nombre;
-  const provinciaCorrecta = localidadElegida.provincia.nombre;
+    const nombreLocalidad = localidadElegida.nombre;
+    const provinciaCorrecta = localidadElegida.provincia.nombre;
 
-  // Traemos la lista de provincias para armar las 2 opciones incorrectas
-  const respuestaProvincias = await fetch("https://apis.datos.gob.ar/georef/api/provincias?campos=nombre");
-  const datosProvincias = await respuestaProvincias.json();
-  const provincias = datosProvincias.provincias;
+    // Traemos la lista de provincias para armar las 2 opciones incorrectas
+    const respuestaProvincias = await fetch("https://apis.datos.gob.ar/georef/api/provincias?campos=nombre");
+    const datosProvincias = await respuestaProvincias.json();
+    const provincias = datosProvincias.provincias;
 
-  const incorrectas = [];
-  while (incorrectas.length < 2) {
-    const indiceProvincia = Math.floor(Math.random() * provincias.length);
-    const nombreProvincia = provincias[indiceProvincia].nombre;
+    const incorrectas = [];
+    while (incorrectas.length < 2) {
+      const indiceProvincia = Math.floor(Math.random() * provincias.length);
+      const nombreProvincia = provincias[indiceProvincia].nombre;
 
-    if (nombreProvincia !== provinciaCorrecta && !incorrectas.includes(nombreProvincia)) {
-      incorrectas.push(nombreProvincia);
+      if (nombreProvincia !== provinciaCorrecta && !estaEnArray(nombreProvincia, incorrectas)) {
+        incorrectas.push(nombreProvincia);
+      }
     }
+
+    const pregunta = {
+      texto: "¿A qué provincia pertenece la localidad de " + nombreLocalidad + "?",
+      correcta: provinciaCorrecta,
+      opciones: [provinciaCorrecta, incorrectas[0], incorrectas[1]]
+    };
+
+    return pregunta;
+
+  } catch (error) {
+    // Si falla la conexion o la API no responde, avisamos y devolvemos null
+    console.log("Error al obtener la pregunta:", error);
+    return null;
   }
-
-  const pregunta = {
-    texto: "¿A qué provincia pertenece la localidad de " + nombreLocalidad + "?",
-    correcta: provinciaCorrecta,
-    opciones: [provinciaCorrecta, incorrectas[0], incorrectas[1]]
-  };
-
-  return pregunta;
 }
 
-/*  mezcla un array (para que la correcta no este siempre primera) */
+/* Chequea si un valor ya esta en un array (reemplaza a includes)  */
+
+function estaEnArray(valor, array) {
+  for (let i = 0; i < array.length; i++) {
+    if (array[i] === valor) {
+      return true;
+    }
+  }
+  return false;
+}
+
+/*  Mezcla un array (para que la correcta no este siempre primera)  */
 
 function mezclarArray(array) {
-  const copia = array.slice();
   const resultado = [];
+  const indicesUsados = [];
 
-  while (copia.length > 0) {
-    const indice = Math.floor(Math.random() * copia.length);
-    resultado.push(copia[indice]);
-    copia.splice(indice, 1);
+  while (resultado.length < array.length) {
+    const indice = Math.floor(Math.random() * array.length);
+
+    if (!estaEnArray(indice, indicesUsados)) {
+      indicesUsados.push(indice);
+      resultado.push(array[indice]);
+    }
   }
 
   return resultado;
 }
 
-/*  actualiza los contadores en pantalla  */
+/*  Actualiza los contadores en pantalla  */
 
 function actualizarContadores() {
   contadorRonda.innerText = "Pregunta " + rondaActual + " de " + totalRondas;
-  contadorAciertos.innerText = "Aciertos: " + aciertos;
   contadorErrores.innerText = "Errores: " + errores + " / " + maxErrores;
 }
 
 /* Timer de cada pregunta  */
 
 function iniciarTimer() {
-  tiempoRestante = 15;
+  tiempoRestante = 20;
   timerTexto.innerText = "Tiempo: " + tiempoRestante;
 
   intervaloTimer = setInterval(function () {
@@ -112,6 +143,17 @@ async function cargarPregunta() {
   textoPregunta.innerText = "Cargando pregunta...";
 
   preguntaActual = await obtenerPreguntaGeografia();
+
+  // Si la API fallo (obtenerPreguntaGeografia devolvio null),
+  // avisamos al usuario y no arrancamos el timer
+  if (preguntaActual === null) {
+    textoPregunta.innerText = "No se pudo cargar la pregunta. Revisá tu conexión e intentá de nuevo.";
+    opcion0.innerText = "";
+    opcion1.innerText = "";
+    opcion2.innerText = "";
+    return;
+  }
+
   const opcionesMezcladas = mezclarArray(preguntaActual.opciones);
 
   textoPregunta.innerText = preguntaActual.texto;
@@ -119,11 +161,10 @@ async function cargarPregunta() {
   opcion1.innerText = opcionesMezcladas[1];
   opcion2.innerText = opcionesMezcladas[2];
 
-  
   iniciarTimer();
 }
 
-/*  Procesa la respuesta del jugador  */
+/*  Procesa la respuesta del jugador */
 
 function responder(opcionElegida) {
   clearInterval(intervaloTimer);
@@ -149,17 +190,20 @@ function responder(opcionElegida) {
 /*  Pantalla de fin de juego  */
 
 function terminarJuego(completo) {
+  estadoJuegoDiv.hidden = true;
   preguntaActualDiv.hidden = true;
   resultadoFinalDiv.hidden = false;
 
+  puntajeFinal.innerText = aciertos;
+
   if (completo) {
-    mensajeFinal.innerText = "¡Completaste las 15 preguntas! Acertaste " + aciertos + ".";
+    mensajeFinal.innerText = "¡Completaste las 15 preguntas!";
   } else {
-    mensajeFinal.innerText = "Te quedaste sin intentos. Acertaste " + aciertos + " de " + rondaActual + " preguntas.";
+    mensajeFinal.innerText = "Te quedaste sin intentos.";
   }
 }
 
-/*  Reinicia el juego desde cero  */
+/* Reinicia el juego desde cero  */
 
 function reiniciarJuego() {
   rondaActual = 1;
@@ -167,13 +211,27 @@ function reiniciarJuego() {
   errores = 0;
 
   resultadoFinalDiv.hidden = true;
+  estadoJuegoDiv.hidden = false;
   preguntaActualDiv.hidden = false;
 
   actualizarContadores();
   cargarPregunta();
 }
 
-/*  Eventos de los botones de opciones */
+/*  Arranca el juego cuando se toca "Empezar a jugar"  */
+
+function empezarJuego() {
+  pantallaInicio.hidden = true;
+  estadoJuegoDiv.hidden = false;
+  preguntaActualDiv.hidden = false;
+
+  actualizarContadores();
+  cargarPregunta();
+}
+
+btnEmpezarJuego.addEventListener("click", empezarJuego);
+
+/* Eventos de los botones de opciones  */
 
 opcion0.addEventListener("click", function () {
   responder(opcion0.innerText);
@@ -188,8 +246,3 @@ opcion2.addEventListener("click", function () {
 });
 
 btnJugarDeNuevo.addEventListener("click", reiniciarJuego);
-
-/*  Arranca el juego al cargar la pagina  */
-
-actualizarContadores();
-cargarPregunta();
