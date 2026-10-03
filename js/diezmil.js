@@ -1,4 +1,4 @@
-// Declaración de variables y constantes
+// Declaración de constantes
 
 const btnTirar = document.getElementById("btnTirar");
 const btnPlantarse = document.getElementById("btnPlantarse");
@@ -12,8 +12,11 @@ const dado5 = document.getElementById("dado5");
 const puntajeTurno = document.getElementById("puntajeTurno");
 const puntajeJugadorHTML = document.getElementById("puntajeJugador");
 
+const puntajePCHTML = document.getElementById("puntajePC"); //Puntos PC.
+const jugadorActualHTML = document.getElementById("jugadorActual"); // Actualiza el turno.
 
-// Array para guardar los valores de los dados
+
+// Array para guardar los valores de los dados y variables para puntajes y turnos
 
 let dados = [0, 0, 0, 0, 0];
  
@@ -23,6 +26,10 @@ let puntajeJugador = 0;
 
 let turno = "jugador";
 
+let puntajeComputadora = 0;
+
+let yaTiro = false;
+
 // Función para darle valores aleatorios a los dados
 
 function tirarDado() {
@@ -30,7 +37,7 @@ function tirarDado() {
 }
 
 
-// Función que calcula los puntos
+// Función que calcula los puntos del Jugador
 
 function calcularPuntos(dados) {
 
@@ -75,10 +82,53 @@ function calcularPuntos(dados) {
     return puntos;
 }
 
+// Función de turno de PC.
 
+function jugarTurnoComputadora() {
+
+    turno = "computadora";
+
+    jugadorActualHTML.textContent = "Computadora";
+    mensajeJuego.textContent = "Turno de la computadora...";
+
+
+    // La PC tira los dados.
+    let dadosPC = [
+        tirarDado(),
+        tirarDado(),
+        tirarDado(),
+        tirarDado(),
+        tirarDado()
+    ];
+
+   
+    // Se calculan los puntos de la PC.
+    let puntosPC = calcularPuntos(dadosPC);
+
+    if (puntosPC > 0) {
+        puntajeComputadora += puntosPC;
+        mensajeJuego.textContent =
+            "La computadora sumó " + puntosPC + " puntos.";
+    } else {
+        mensajeJuego.textContent =
+            "La computadora no sumó puntos.";
+    }
+
+    // Actualizamos el puntaje en pantalla
+
+    puntajePCHTML.textContent = puntajeComputadora + " puntos";
+
+    // Vuelve el turno al jugador
+
+    turno = "jugador";
+    jugadorActualHTML.textContent = "Jugador";
+
+}
 // Click en Tirar dados. Funciones para seguir jugando/plantarse o perder el turno.
 
 btnTirar.addEventListener("click", function() {
+    if (turno !== "jugador") {
+    return; }
 
     dados[0] = tirarDado();
     dados[1] = tirarDado();
@@ -98,34 +148,81 @@ btnTirar.addEventListener("click", function() {
 
     if (puntos === 0) {
 
-        puntosTurno = 0;
+    puntosTurno = 0;
+    puntajeTurno.textContent = puntosTurno;
 
-        puntajeTurno.textContent = puntosTurno;
+    mensajeJuego.textContent =
+        "¡No sumaste puntos! Perdés el turno.";
 
-        mensajeJuego.textContent = "¡No sumaste puntos! Perdés el turno.";
+    yaTiro = false;
+    jugarTurnoComputadora(); } 
 
-    } else {
+    else {
 
-        puntosTurno += puntos;
+    puntosTurno += puntos;
+    puntajeTurno.textContent = puntosTurno;
 
-        puntajeTurno.textContent = puntosTurno;
+    mensajeJuego.textContent =
+        "Seguís jugando o podés plantarte.";
 
-        mensajeJuego.textContent = "Seguís jugando o podés plantarte.";
-
-    }
+    yaTiro = true; }
 
 });
 
 // Click en Plantarse. Función para sumar los puntos del turno.
+
 btnPlantarse.addEventListener("click", function() {
+
+    if (turno !== "jugador") {
+        return;
+    }
+
+    if (!yaTiro) {
+        mensajeJuego.textContent =
+            "Primero tenés que tirar los dados.";
+        return;
+    }
+
+    // Se guardan los puntos del turno
 
     puntajeJugador += puntosTurno;
 
-    puntajeJugadorHTML.textContent = puntajeJugador + " puntos";
+    puntajeJugadorHTML.textContent =
+        puntajeJugador + " puntos";
+
+    if (comprobarGanador()) {
+    return; }
+
+    // Se reinicia el turno del jugador
 
     puntosTurno = 0;
-
     puntajeTurno.textContent = puntosTurno;
+
+    yaTiro = false;
+
+    // Juega la computadora
+
+    jugarTurnoComputadora();
 
 });
 
+function comprobarGanador() {
+
+    if (puntajeJugador >= 10000) {
+
+        mensajeJuego.textContent = "¡Ganaste! Llegaste a 10.000 puntos.";
+        turno = "finalizado";
+
+        return true;
+    }
+
+    if (puntajeComputadora >= 10000) {
+
+        mensajeJuego.textContent = "¡Ganó la computadora!";
+        turno = "finalizado";
+
+        return true;
+    }
+
+    return false;
+}
