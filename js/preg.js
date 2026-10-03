@@ -119,6 +119,7 @@ async function cargarPregunta() {
   opcion1.innerText = opcionesMezcladas[1];
   opcion2.innerText = opcionesMezcladas[2];
 
+  
   iniciarTimer();
 }
 
