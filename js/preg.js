@@ -192,3 +192,4 @@ btnJugarDeNuevo.addEventListener("click", reiniciarJuego);
 /*  Arranca el juego al cargar la pagina  */
 
 actualizarContadores();
+cargarPregunta();
