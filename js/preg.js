@@ -1,23 +1,23 @@
 /* ===========================================
-   preguntas.js
-   Juego "Cuán argentino sos?" - categoria geografia
+   preg.js
+   Juego "Cuanta calle tenés?" - categoria geografia
    =========================================== */
 
-/*  Variables globales del estado del juego */
+/* ---------- Variables globales del estado del juego ---------- */
 
 let rondaActual = 1;
-const totalRondas = 20;
+const totalRondas = 15;
 
 let aciertos = 0;
 let errores = 0;
 const maxErrores = 3;
 
-let tiempoRestante = 15;
+let tiempoRestante = 20;
 let intervaloTimer = null;
 
 let preguntaActual = null;
 
-/* Referencias al DOM*/
+/* ---------- Referencias al DOM ---------- */
 
 const pantallaInicio = document.querySelector("#pantalla-inicio");
 const btnEmpezarJuego = document.querySelector("#btn-empezar-juego");
@@ -37,7 +37,8 @@ const resultadoFinalDiv = document.querySelector("#resultado-final");
 const mensajeFinal = document.querySelector("#mensaje-final");
 const puntajeFinal = document.querySelector("#puntaje");
 const btnJugarDeNuevo = document.querySelector("#btn-jugar-de-nuevo");
- */
+
+/* ---------- Trae una pregunta de geografia desde Georef ---------- */
 
 async function obtenerPreguntaGeografia() {
   try {
@@ -83,7 +84,7 @@ async function obtenerPreguntaGeografia() {
   }
 }
 
-/* Chequea si un valor ya esta en un array (reemplaza a includes)  */
+/* ---------- Chequea si un valor ya esta en un array (reemplaza a includes) ---------- */
 
 function estaEnArray(valor, array) {
   for (let i = 0; i < array.length; i++) {
@@ -94,7 +95,7 @@ function estaEnArray(valor, array) {
   return false;
 }
 
-/*  Mezcla un array (para que la correcta no este siempre primera)  */
+/* ---------- Mezcla un array (para que la correcta no este siempre primera) ---------- */
 
 function mezclarArray(array) {
   const resultado = [];
@@ -112,14 +113,14 @@ function mezclarArray(array) {
   return resultado;
 }
 
-/*  Actualiza los contadores en pantalla  */
+/* ---------- Actualiza los contadores en pantalla ---------- */
 
 function actualizarContadores() {
   contadorRonda.innerText = "Pregunta " + rondaActual + " de " + totalRondas;
   contadorErrores.innerText = "Errores: " + errores + " / " + maxErrores;
 }
 
-/* Timer de cada pregunta  */
+/* ---------- Timer de cada pregunta ---------- */
 
 function iniciarTimer() {
   tiempoRestante = 20;
@@ -137,7 +138,7 @@ function iniciarTimer() {
   }, 1000);
 }
 
-/*  Carga y muestra una pregunta nueva  */
+/* ---------- Carga y muestra una pregunta nueva ---------- */
 
 async function cargarPregunta() {
   textoPregunta.innerText = "Cargando pregunta...";
@@ -164,7 +165,7 @@ async function cargarPregunta() {
   iniciarTimer();
 }
 
-/*  Procesa la respuesta del jugador */
+/* ---------- Procesa la respuesta del jugador ---------- */
 
 function responder(opcionElegida) {
   clearInterval(intervaloTimer);
@@ -187,7 +188,7 @@ function responder(opcionElegida) {
   }
 }
 
-/*  Pantalla de fin de juego  */
+/* ---------- Pantalla de fin de juego ---------- */
 
 function terminarJuego(completo) {
   estadoJuegoDiv.hidden = true;
@@ -196,14 +197,16 @@ function terminarJuego(completo) {
 
   puntajeFinal.innerText = aciertos;
 
-  if (completo) {
-    mensajeFinal.innerText = "¡Completaste las 15 preguntas!";
+  if (completo && aciertos === totalRondas) {
+    mensajeFinal.innerText = "¡Completaste las 15 preguntas! Tenés un montón de calle, seguí pateándola.";
+  } else if (completo) {
+    mensajeFinal.innerText = "¡Completaste las 15 preguntas, pero te falta calle! Seguí pateándola.";
   } else {
-    mensajeFinal.innerText = "Te quedaste sin intentos.";
+    mensajeFinal.innerText = "Te quedaste sin intentos. Te falta calle!!!";
   }
 }
 
-/* Reinicia el juego desde cero  */
+/* ---------- Reinicia el juego desde cero ---------- */
 
 function reiniciarJuego() {
   rondaActual = 1;
@@ -218,7 +221,7 @@ function reiniciarJuego() {
   cargarPregunta();
 }
 
-/*  Arranca el juego cuando se toca "Empezar a jugar"  */
+/* ---------- Arranca el juego cuando se toca "Empezar a jugar" ---------- */
 
 function empezarJuego() {
   pantallaInicio.hidden = true;
@@ -231,7 +234,7 @@ function empezarJuego() {
 
 btnEmpezarJuego.addEventListener("click", empezarJuego);
 
-/* Eventos de los botones de opciones  */
+/* ---------- Eventos de los botones de opciones ---------- */
 
 opcion0.addEventListener("click", function () {
   responder(opcion0.innerText);
