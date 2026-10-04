@@ -3,18 +3,26 @@ const recordCartasEl = document.getElementById('record-cartas');
 const recordDadosEl = document.getElementById('record-dados');
 const recordPreguntasEl = document.getElementById('record-preguntas');
 
-// Lee un record de localStorage y lo muestra en el elemento indicado. 
-// Si la clave todavia no existe (getItem devuelve null), muestra el mensaje de "sin record" en vez de un numero
-function mostrarRecord(clave, elemento) {
-    const valorGuardado = localStorage.getItem(clave);
+// Lee el top 5 guardado en localStorage para un juego y lo muestro
+// como lista. Si la clave todavia no existe, (nunca se guardo nada), 
+// localStorage.getItem devuelve null, por eso el "|| '[]'" para que JSON.parse reciba un string valido y no tire error
+function mostrarRankings(clave, elementoLista) {
+    const historial = JSON.parse(localStorage.getItem(clave) || '[]');
 
-    if (valorGuardado === null) {
-        elemento.textContent = 'No hay records todavia';
-    } else {
-        elemento.textContent = valorGuardado;
-    }
+    if (historial.length === 0) {
+        elementoLista.innerHTML = '<li>No hay puntajes guardados.</li>';
+        return;
+    } 
+
+    elementoLista.innerHTML = '';
+    historial.forEach(puntaje => {
+        const item = document.createElement('li');
+        item.textContent = puntaje;
+        elementoLista.append(item);
+    });
 }
 
-mostrarRecord('recordCartas', recordCartasEl);
-mostrarRecord('recordDados', recordDadosEl);
-mostrarRecord('recordPreguntas', recordPreguntasEl);
+
+mostrarRankings('recordCartas', recordCartasEl);
+mostrarRankings('recordDados', recordDadosEl);
+mostrarRankings('recordPreguntas', recordPreguntasEl);

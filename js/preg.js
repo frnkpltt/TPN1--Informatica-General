@@ -11,6 +11,7 @@ const totalRondas = 15;
 let aciertos = 0;
 let errores = 0;
 const maxErrores = 3;
+const metaAciertos = 15;
 
 let tiempoRestante = 20;
 let intervaloTimer = null;
@@ -37,6 +38,18 @@ const resultadoFinalDiv = document.querySelector("#resultado-final");
 const mensajeFinal = document.querySelector("#mensaje-final");
 const puntajeFinal = document.querySelector("#puntaje");
 const btnJugarDeNuevo = document.querySelector("#btn-jugar-de-nuevo");
+
+/* ---------- Guarda un puntaje en el top 5 histórico de localStorage ----------
+   Misma función que en qesq.js (el juego de cartas) — cada script la
+   necesita por separado, no se comparte entre archivos. */
+ 
+function guardarEnRankings(clave, puntajeNuevo) {
+  const historial = JSON.parse(localStorage.getItem(clave) || '[]');
+  historial.push(puntajeNuevo);
+  historial.sort((a, b) => b - a); // Orden descendente
+  const top5 = historial.slice(0, 5); // Solo los 5 mejores
+  localStorage.setItem(clave, JSON.stringify(top5));
+}
 
 /* ---------- Trae una pregunta de geografia desde Georef ---------- */
 
@@ -180,7 +193,7 @@ function responder(opcionElegida) {
 
   if (errores >= maxErrores) {
     terminarJuego(false);
-  } else if (rondaActual >= totalRondas) {
+  } else if (rondaActual >= metaAciertos) {
     terminarJuego(true);
   } else {
     rondaActual = rondaActual + 1;
@@ -204,6 +217,9 @@ function terminarJuego(completo) {
   } else {
     mensajeFinal.innerText = "Te quedaste sin intentos. Te falta calle!!!";
   }
+
+  // Guarda este puntaje en el top 5 histórico (reemplaza el récord único viejo)
+  guardarEnRankings("recordPreguntas", aciertos);
 }
 
 /* ---------- Reinicia el juego desde cero ---------- */

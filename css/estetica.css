@@ -40,9 +40,11 @@ body {
   fill: #f6b40e;
 }
 
-/* 
-   Menu de navegacion
-    */
+/* ========================================== */
+/*              Menu de navegacion            */
+/* ========================================== */
+    
+    
 nav {
   background-color: #660503;
   padding: 1rem;
@@ -181,11 +183,6 @@ nav a:hover {
   font-family: "Milonga", serif;
   font-size: 2.8rem;
 }
-
-/*
-mismo motivo que arriba. El <section> afectaba a cualquier link dentro de cualquier section,
-ahora es una clase puntual para el boton
-*/
 
 .boton-jugar {
   display: inline-block;
@@ -328,3 +325,20 @@ select {
     font-size: 1.4rem;
     font-weight: 700;
    }
+
+   .tarjeta-record ol {
+  font-family: "Arvo", serif;
+  list-style-position: inside;
+  padding: 0;
+  width: 100%;
+}
+
+.tarjeta-record li {
+  font-size: 1.1rem;
+  padding: 0.2rem 0;
+}
+
+.tarjeta-record li:first-child {
+  font-weight: 700;
+  font-size: 1.3rem;
+}

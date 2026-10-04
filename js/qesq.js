@@ -6,82 +6,82 @@ const personajes = [
     {
         nombre: 'Belgrano', foto: 'img/cartas/belgrano.png', esMujer: false, esArgentino: true, esMusico: false, esFiguraDeEspectaculo: false, 
         esDeportista: false, sigueConVida: false, esPersonajeDeFiccion: false, esPolitico: true, esEmpresario: false, esArtista: false, 
-        esGay: true
+
     },
     {   
         nombre: 'Moria Casán', foto: 'img/cartas/moria.png', esMujer: true, esArgentino: true, esMusico: false, 
         esFiguraDeEspectaculo: true, esDeportista: false, esEmpresario: true, sigueConVida: true, esPersonajeDeFiccion: false, esPolitico: false, 
-        esArtista: true, esGay: true
+        esArtista: false
     },
     {
         nombre: 'Charly Garcia', foto: 'img/cartas/charly.png', esMujer: false, esArgentino: true, esMusico: true, 
         esFiguraDeEspectaculo: false, esDeportista: false, esEmpresario: false, sigueConVida: true, esPersonajeDeFiccion: false, esPolitico: false,
-        esArtista: true, esGay: true
+        esArtista: true
     },
     {
         nombre: 'Cristina Kirchner', foto: 'img/cartas/cristina.png', esMujer: true, esArgentino:true, esMusico: false, 
         esFiguraDeEspectaculo: false, esDeportista: false, esEmpresario: false, sigueConVida: true, esPersonajeDeFiccion: false, esPolitico: true, 
-        esArtista: false, esGay: false
+        esArtista: false
     }, 
     {
         nombre: 'Freddy Mercury', foto: 'img/cartas/freddy.png', esMujer: false, esArgentino: false, esMusico: true,
         esFiguraDeEspectaculo: true, esDeportista: false, esEmpresario: false, sigueConVida: false, esPersonajeDeFiccion: false, esPolitico: false, 
-        esArtista: true, esGay: true
+        esArtista: true
     }, 
     {
         nombre: 'Indio Solari', foto: 'img/cartas/indio.png', esMujer: false, esArgentino: true, esMusico: true, 
         esFiguraDeEspectaculo: false, esDeportista: false, esEmpresario: false, sigueConVida: false, esPersonajeDeFiccion: false,
-        esPolitico: false, esArtista: true, esGay: false
+        esPolitico: false, esArtista: true
     },   
     {
         nombre: 'Lali Esposito', foto: 'img/cartas/lali.png', esMujer: true, esArgentino: true, esMusico: true, 
         esFiguraDeEspectaculo: true, esDeportista: false, esEmpresario: false, sigueConVida: true, esPersonajeDeFiccion: false, 
-        esPolitico: false, esArtista: true, esGay: true
+        esPolitico: false, esArtista: true
     }, 
     {
         nombre: 'La Mona Gimenez', foto: 'img/cartas/lamona.png', esMujer: false, esArgentino: true, esMusico: true, 
         esFiguraDeEspectaculo: true, esDeportista: false, esEmpresario: false, sigueConVida: true, esPersonajeDeFiccion: false,
-        esPolitico: false, esArtista: true, esGay: true
+        esPolitico: false, esArtista: true
     }, 
     {
         nombre: 'La Negra Vernaci', foto: 'img/cartas/lanegra.png', esMujer: true, esArgentino: true, esMusico: false, 
         esFiguraDeEspectaculo: true, esDeportista: false, esEmpresario: false, sigueConVida: true, esPersonajeDeFiccion: false,
-        esPolitico: false, esArtista: false, esGay: true
+        esPolitico: false, esArtista: false
     }, 
     {
         nombre: 'Maddona', foto: 'img/cartas/maddona.png', esMujer: true, esArgentino: false, esMusico: true, 
         esFiguraDeEspectaculo: true, esDeportista: false, esEmpresario: false, sigueConVida: true, esPersonajeDeFiccion: false,
-        esPolitico: false, esArtista: true, esGay: true
+        esPolitico: false, esArtista: true
     },
     {   
         nombre: 'Juliana Gattas', foto: 'img/cartas/julianagattas.png', esMujer: true, esArgentino: true, esMusico: true, 
         esFiguraDeEspectaculo: false, esDeportista: false, esEmpresario: false, sigueConVida: true, esPersonajeDeFiccion: false,
-        esPolitico: false, esArtista: true, esGay: true
+        esPolitico: false, esArtista: true
     },
     {
         nombre: 'Maria Elena Walsh', foto: 'img/cartas/maria.png', esMujer: true, esArgentino: true, esMusico: false, 
         esFiguraDeEspectaculo: false, esDeportista: false, esEmpresario: false, sigueConVida: false, esPersonajeDeFiccion: false,
-        esPolitico: false, esArtista: true, esGay: true
+        esPolitico: false, esArtista: true
     },
     {
         nombre: 'Pappo', foto: 'img/cartas/pappo.png', esMujer: false, esArgentino: true, esMusico: true, 
         esFiguraDeEspectaculo: false, esDeportista: false, esEmpresario: false, sigueConVida: false, esPersonajeDeFiccion: false,
-        esPolitico: false, esArtista: true, esGay: false
+        esPolitico: false, esArtista: true
     },
     {
         nombre: 'Perón', foto: 'img/cartas/peron.png', esMujer: false, esArgentino: true, esMusico: false, 
         esFiguraDeEspectaculo: false, esDeportista: false, esEmpresario: true, sigueConVida: false, esPersonajeDeFiccion: false,
-        esPolitico: true, esArtista: false, esGay: false
+        esPolitico: true, esArtista: false
     },
     {
         nombre: 'Vivienne Westwood', foto: 'img/cartas/vivienne.png', esMujer: true, esArgentino: false, esMusico: false, 
         esFiguraDeEspectaculo: true, esDeportista: false, esEmpresario: false, sigueConVida: false, esPersonajeDeFiccion: false,
-        esPolitico: false, esArtista: true, esGay: true
+        esPolitico: false, esArtista: true
     },
     {
         nombre: 'Yayo', foto: 'img/cartas/yayo.png', esMujer: false, esArgentino: true, esMusico: false, 
         esFiguraDeEspectaculo: true, esDeportista: false, esEmpresario: false, sigueConVida: true, esPersonajeDeFiccion: false,
-        esPolitico: false, esArtista: true, esGay: false
+        esPolitico: false, esArtista: true
     }
 ]
 // Puntaje acumulado de aciertos en la sesión — reiniciar arma una ronda
@@ -99,7 +99,16 @@ const resultadoFinalEl = document.getElementById('resultado-final');
 const btnReiniciar = document.getElementById('btn-reiniciar');
 const puntajeEl = document.getElementById('puntaje');
 
-// arma el tablero; una carta por personaje (createElement, igual que en la practica 41)
+// Guarda un puntaje nuevo en el top 5 historico de localStorage para un juego. Reutilizable por los tres juegos del sitio: cada uno la llama con su propia clave
+    function guardarEnRankings(clave, puntajeNuevo) {
+        const historial = JSON.parse(localStorage.getItem(clave) || '[]');
+        historial.push(puntajeNuevo);
+        historial.sort((a, b) => b - a); // Orden descendente
+        const top5 = historial.slice(0, 5); // Solo los 5 mejores
+        localStorage.setItem(clave, JSON.stringify(top5));
+    }
+
+// arma el tablero; una carta por personaje
 
 personajes.forEach(personaje => {
   const carta = document.createElement('article');
@@ -161,12 +170,8 @@ btnAdivinar.addEventListener('click', () => {
             puntajeEl.textContent = puntaje;
             resultadoFinalEl.textContent = '¡Correcto! Era ' + personajeSecreto.nombre + '.';
     } else {
-            resultadoFinalEl.textContent = 'Incorrecto. Era ' + personajeSecreto.nombre + '.';
-            // Chequea y actualiza el récord al perder
-            const recordGuardado = Number(localStorage.getItem('recordCartas') || 0);
-            if (puntaje > recordGuardado) {
-                localStorage.setItem('recordCartas', puntaje);
-            }
+        resultadoFinalEl.textContent = 'Incorrecto. Era ' + personajeSecreto.nombre + '.';
+        guardarEnRankings('recordCartas', puntaje);
     }
 
     btnPreguntar.disabled = true;
