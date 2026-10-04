@@ -40,24 +40,23 @@
       cada juego del sitio.</p>
   </section>
 
-  <!-- Los tres <p id="..."> los completa el JS leyendo localStorage.
-       Arrancan con "Cargando..." para no mostrar nada vacío mientras
-       corre el script. -->
+  <!-- Las tres <ol id="..."> las completa el JS leyendo localStorage:
+       un <li> por cada puntaje del top 5, ordenados de mayor a menor. -->
   <section class="rankings">
 
     <article class="tarjeta-record">
       <h2>Juego de Cartas</h2>
-      <p id="record-cartas">Cargando...</p>
+      <ol id="record-cartas"></ol>
     </article>
 
     <article class="tarjeta-record">
       <h2>Juego de Dados</h2>
-      <p id="record-dados">Cargando...</p>
+      <ol id="record-dados"></ol>
     </article>
 
     <article class="tarjeta-record">
       <h2>Juego de Preguntas</h2>
-      <p id="record-preguntas">Cargando...</p>
+      <ol id="record-preguntas"></ol>
     </article>
 
   </section>

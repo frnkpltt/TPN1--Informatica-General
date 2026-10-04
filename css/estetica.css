@@ -40,19 +40,22 @@ body {
   fill: #f6b40e;
 }
 
-/* 
-   Menu de navegacion
-    */
+/* ========================================== */
+/*              Menu de navegacion            */
+/* ========================================== */
+    
+    
 nav {
   background-color: #660503;
   padding: 1rem;
+  border-radius: 10px;
 }
 
 nav ul {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  gap: 2rem;
+  gap: 4rem;
   list-style: none;
 }
 
@@ -62,6 +65,12 @@ nav a {
   font-style: normal;
   color: #f6b40e;
   text-decoration: none;
+  font-size: 1.2rem;
+
+}
+
+nav a:hover {
+  text-decoration: underline;
 }
 /* 
    Seccion de introduccion
@@ -86,7 +95,10 @@ nav a {
   text-align: center;
 }
 
-/*Sección de integrantes*/
+/*=================================================*/
+/* Sección de integrantes */
+/*=================================================*/
+
 .integrantes-lista {
   width: min(100%, 54rem);
   margin: 0 auto;
@@ -130,7 +142,10 @@ nav a {
   }
 }
 
-/*Juego de dados*/
+/*==================================================*/
+/* Reglas del juego de dados */
+/*==================================================*/
+
 .reglasdados {
   font-family: "Milonga";
   margin-top: 1rem;
@@ -155,12 +170,6 @@ nav a {
 }
 
 
- /*
- aca saque el <article> porque aplicaba el estilo a todos los <article>, incluyendo los futuros. 
- Lo pasamos a la clase .tarjeta-juego para que solo afecte a las tarjetas de juego de esa seccion
- y tengamos mas control. 
- */
-
 .tarjeta-juego {
   display: flex;
   flex-direction: column;
@@ -172,13 +181,8 @@ nav a {
 
 .tarjeta-juego h2 {
   font-family: "Milonga", serif;
-  font-size: 1.8rem;
+  font-size: 2.8rem;
 }
-
-/*
-mismo motivo que arriba. El <section> afectaba a cualquier link dentro de cualquier section,
-ahora es una clase puntual para el boton
-*/
 
 .boton-jugar {
   display: inline-block;
@@ -210,7 +214,7 @@ layout como hacía el "article" viejo
     Juego de cartas: Quién es Quién
    ===================================== */
 .tarjeta-juego img {
-  width: 220px;
+  width: 400px;
   border-radius: 8px;
 }
 
@@ -269,18 +273,18 @@ select {
 }
 
 .carta img {
-  width: 90px;
-  height: 100px;
+  width: 100px;
+  height: 150px;
   object-fit: cover;
   border-radius: 6px;
 }
 
 .carta p {
   font-family: "Arvo", serif;
-  font-size: 0.75rem;
+  font-size: 0.80rem;
   color: #f6b40e;
   text-align: center;
-  margin-top: 0.3rem;
+  margin-top: 0.5rem;
 }
 
 /* esta es la clase que el js agrega/saca con classList.toggle() cada vez que tocas una carta para descartarla */
@@ -321,3 +325,20 @@ select {
     font-size: 1.4rem;
     font-weight: 700;
    }
+
+   .tarjeta-record ol {
+  font-family: "Arvo", serif;
+  list-style-position: inside;
+  padding: 0;
+  width: 100%;
+}
+
+.tarjeta-record li {
+  font-size: 1.1rem;
+  padding: 0.2rem 0;
+}
+
+.tarjeta-record li:first-child {
+  font-weight: 700;
+  font-size: 1.3rem;
+}
