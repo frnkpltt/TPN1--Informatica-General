@@ -1,21 +1,31 @@
-
+/* ============================================================
+   RESET BASICO
+   ============================================================ */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* Fondo general del sitio: la imagen se ve alrededor del contenedor, hay que armar un collage para poner de fodo*/
+/* ============================================================
+   FONDO GENERAL DEL SITIO
+   La imagen se ve alrededor del contenedor (fileteado repetido
+   verticalmente).
+   ============================================================ */
 body {
   background-color: #660503;
-  background-size: cover;
-  background-attachment: fixed;
-  background-position: center;
+  background-image: url("../img/filete-borde.png");
+  background-repeat: repeat-y;
+  background-position: top center;
+  background-size: 100% auto;
 
-  padding: 1em 5rem;
+  padding: 2em 8rem;
 }
 
-/* Contenedor solido que envuelve todo el contenido del body */
+/* ============================================================
+   CONTENEDOR SOLIDO
+   Envuelve todo el contenido del body en cada pagina
+   ============================================================ */
 .contenedor {
   background-color: #1b4a73;
 
@@ -25,11 +35,24 @@ body {
 
   padding: 1.5rem;
 }
+
+/* ============================================================
+   TITULO CURVO (SVG) Y H1
+   El titulo-curvo es el SVG con textPath que usan todas las
+   paginas; h1 queda como respaldo por si alguna pagina usa un
+   titulo simple en vez del SVG
+   ============================================================ */
 .titulo-curvo, h1 {
-  width: 100%;
+
+  width: 200%;
   max-width: 50rem;
   display: block;
   margin: 0 auto;
+}
+.titulo-curvo text {
+  stroke: #f6b40e;
+  stroke-width: 1px;
+  text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.6);
 }
 
 .titulo-curvo text, h1 {
@@ -40,15 +63,25 @@ body {
   fill: #f6b40e;
 }
 
-/* ========================================== */
-/*              Menu de navegacion            */
-/* ========================================== */
-    
-    
+/* ============================================================
+   PANTALLA DE INICIO DEL JUEGO DE PREGUNTAS
+   Contenedor del boton "Empezar a jugar" antes de arrancar
+   ============================================================ */
+#pantalla-inicio {
+  text-align: center;
+}
+
+/* ============================================================
+   MENU DE NAVEGACION
+   Igual en las 6 paginas del sitio
+   ============================================================ */
+
+
 nav {
   background-color: #660503;
   padding: 1rem;
   border-radius: 10px;
+  text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.6);
 }
 
 nav ul {
@@ -66,22 +99,34 @@ nav a {
   color: #f6b40e;
   text-decoration: none;
   font-size: 1.2rem;
-
+  display: inline-block;
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  transition: transform 0.15s;
 }
 
 nav a:hover {
   text-decoration: underline;
+  transform: translateY(-2px);
 }
-/* 
-   Seccion de introduccion
-    */
+
+nav a:active {
+  background-color: #f6b40e;
+  color: #660503;
+}
+
+/* ============================================================
+   SECCION DE INTRODUCCION Y SECTIONS GENERICAS
+   ".intro" es el bloque de texto del index; "section" sin clase
+   hereda el mismo fondo/padding por defecto en cualquier pagina
+   ============================================================ */
 .intro, section {
   background-color: #1e4d1b;
   padding: 1.5rem;
   margin-top: 1.5rem;
 
 }
- 
+
 .intro p  {
   font-family: "Milonga", serif;
   font-weight: 400;
@@ -89,15 +134,16 @@ nav a:hover {
   color: #f6b40e;
   margin-bottom: 1rem;
   line-height: 1.6;
+  text-align: center;
 }
 
 .intro > article:first-child p {
   text-align: center;
 }
 
-/*=================================================*/
-/* Sección de integrantes */
-/*=================================================*/
+/* ============================================================
+   SECCION DE INTEGRANTES
+   ============================================================ */
 
 .integrantes-lista {
   width: min(100%, 54rem);
@@ -142,9 +188,9 @@ nav a:hover {
   }
 }
 
-/*==================================================*/
-/* Reglas del juego de dados */
-/*==================================================*/
+/* ============================================================
+   REGLAS DEL JUEGO DE DADOS
+   ============================================================ */
 
 .reglasdados {
   font-family: "Milonga";
@@ -169,6 +215,10 @@ nav a:hover {
   color: #f6b40e;
 }
 
+/* ============================================================
+   TARJETAS DE JUEGO (home)
+   Cada <article class="tarjeta-juego"> dentro de section.juegos
+   ============================================================ */
 
 .tarjeta-juego {
   display: flex;
@@ -177,12 +227,24 @@ nav a:hover {
   gap: 1rem;
   color: #f6b40e;
   margin-bottom: 1rem;
+
+  border: 3px solid #f6b40e;
+  border-radius: 8px;
+  padding: 1.5rem;
 }
 
 .tarjeta-juego h2 {
   font-family: "Milonga", serif;
   font-size: 2.8rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
 }
+
+/* ============================================================
+   BOTON GENERICO .boton-jugar
+   Compartido en todo el sitio: tarjetas de juego del home,
+   "Empezar a jugar" y las opciones de respuesta del juego de
+   preguntas. No es exclusivo de ninguna pagina en particular.
+   ============================================================ */
 
 .boton-jugar {
   display: inline-block;
@@ -193,11 +255,25 @@ nav a:hover {
   padding: 0.6rem 1.5rem;
   border-radius: 4px;
   transition: transform 0.15s;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
 }
 
 .boton-jugar:hover {
   transform: translateY(-2px);
 }
+
+.boton-jugar:active {
+  background-color: #f6b40e;
+  color: #660503;
+}
+
+/* ============================================================
+   IMAGENES DENTRO DE ARTICLE (regla defensiva generica)
+   Evita que cualquier imagen dentro de un article se desborde,
+   sin forzar ningun layout especifico
+   ============================================================ */
 article img {
   max-width: 100%;
   height: auto;
@@ -205,33 +281,32 @@ article img {
   margin: 0 auto;
 }
 
-/* 
-Esta la dejamos genérica a propósito: es solo una regla defensiva para
-que ninguna imagen dentro de un article se desborde, no fuerza ningún
-layout como hacía el "article" viejo 
-*/
-/* =====================================
-    Juego de cartas: Quién es Quién
-   ===================================== */
+/* ============================================================
+   JUEGO DE CARTAS: QUIEN ES QUIEN
+   ============================================================ */
 .tarjeta-juego img {
   width: 400px;
   border-radius: 8px;
 }
 
+.reglas {
+  text-align: center;
+}
+
 .reglas p {
   font-family: "Arvo", serif;
-  color: #d32222;
+  color: #660503;
   margin-top: 20px;
   font-weight: 700;
 }
 
 .reglas h2 {
   font-family: "Arvo", serif;
-  color: #2700d3;
-  
+  color: #1b4a73;
+  text-decoration: underline;
 }
 
-.preguntas, 
+.preguntas,
 .adivinar {
   display: flex;
   align-items: ceneter;
@@ -246,7 +321,7 @@ select {
   border: none;
 }
 
-#respuesta, 
+#respuesta,
 #resultado-final {
   font-family: "Arvo", serif;
   color: #f6b40e;
@@ -287,14 +362,15 @@ select {
   margin-top: 0.5rem;
 }
 
-/* esta es la clase que el js agrega/saca con classList.toggle() cada vez que tocas una carta para descartarla */
+/* Clase que el JS agrega/saca con classList.toggle() cada vez
+   que se toca una carta para descartarla */
 .carta.descartada {
   opacity: 0.25;
 }
 
-/* ================================================================
-                        Pagina de rankings 
-   ================================================================ */
+/* ============================================================
+   PAGINA DE RANKINGS
+   ============================================================ */
 
    .rankings {
     display: flex;
@@ -341,4 +417,39 @@ select {
 .tarjeta-record li:first-child {
   font-weight: 700;
   font-size: 1.3rem;
+}
+
+/* ============================================================
+   JUEGO DE PREGUNTAS: CUANTA CALLE TENES?
+   ============================================================ */
+#estado-juego {
+  border: 3px solid #f6b40e;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-top: 1.5rem;
+  text-align: center;
+}
+#pregunta-actual {
+  font-family: "Milonga", serif;
+  color: #f6b40e;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+.opciones {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+#resultado-final {
+  font-family: "Milonga", serif;
+  color: #f6b40e;
+  font-size: 1.5rem;
+  margin: 1rem;
+  text-align: center;
+}
+#btn-jugar-de-nuevo {
+  margin-top: 1rem;
 }
