@@ -253,6 +253,15 @@ select {
   font-weight: 700;
 }
 
+#respuesta {
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+#respuesta.resaltada {
+  backrground-color: #f6b40e;
+  color: #f3f5f7;
+  transform: scale(1.05);
+}
 .tablero {
   display: flex;
   flex-wrap: wrap;
@@ -289,7 +298,7 @@ select {
 
 /* esta es la clase que el js agrega/saca con classList.toggle() cada vez que tocas una carta para descartarla */
 .carta.descartada {
-  opacity: 0.25;
+  opacity: 0.1;
 }
 
 /* ================================================================

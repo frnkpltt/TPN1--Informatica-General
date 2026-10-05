@@ -152,8 +152,20 @@ btnPreguntar.addEventListener('click', () => {
     return;
   }
 
+  // Texto visible de la opción elegida (no el value interno, sino
+  // lo que el usuario realmente ve en el desplegable)
+  const textoPregunta = selectPregunta.options[selectPregunta.selectedIndex].textContent;
+
   const esVerdad = personajeSecreto[atributoElegido];
-  respuestaEl.textContent = esVerdad ? 'Sí' : 'No';
+  respuestaEl.textContent = textoPregunta + ' → ' + (esVerdad ? 'Sí' : 'No');
+
+  // "Flash" visual: saca la clase y la vuelve a poner un instante
+  // después, para que la transición de CSS se vea aunque el texto
+  // sea el mismo que la vez anterior
+  respuestaEl.classList.remove('resaltada');
+  setTimeout(() => {
+    respuestaEl.classList.add('resaltada');
+  }, 10);
 });
  
 // TODO: btnAdivinar -> comparar selectPersonaje.value contra personajeSecreto.nombre

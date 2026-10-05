@@ -15,6 +15,10 @@ const puntajeJugadorHTML = document.getElementById("puntajeJugador");
 const puntajePCHTML = document.getElementById("puntajePC"); //Puntos PC.
 const jugadorActualHTML = document.getElementById("jugadorActual"); // Actualiza el turno.
 
+// FIX: esta constante faltaba. El código usa mensajeJuego en varios lugares
+// pero nunca se había declarado, y eso tiraba un ReferenceError.
+const mensajeJuego = document.getElementById("mensajeJuego");
+
 
 // Array para guardar los valores de los dados y variables para puntajes y turnos
 
@@ -117,6 +121,13 @@ function jugarTurnoComputadora() {
     // Actualizamos el puntaje en pantalla
 
     puntajePCHTML.textContent = puntajeComputadora + " puntos";
+
+    // FIX: ahora también se revisa si la computadora ganó con estos puntos.
+    // Si ganó, cortamos acá: comprobarGanador() ya dejó turno = "finalizado"
+    // y no hay que devolverle el turno al jugador.
+    if (comprobarGanador()) {
+        return;
+    }
 
     // Vuelve el turno al jugador
 
