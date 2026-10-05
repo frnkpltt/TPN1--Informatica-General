@@ -43,8 +43,7 @@
 
                 <!-- Pantalla inicial: se ve antes de arrancar a jugar -->
                 <div class="pantalla-inicio" id="pantalla-inicio">
-                    <button id="btn-empezar-juego" type="button">Empezar a jugar</button>
-                </div>
+<button id="btn-empezar-juego" type="button" class="boton-jugar">Empezar a jugar</button>                </div>
 
                 <!-- Estado actual de la partida (oculto hasta que se empieza a jugar) -->
                 <div class="estado-juego" id="estado-juego" hidden>
@@ -58,9 +57,9 @@
                     <p id="texto-pregunta">Cargando pregunta...</p>
 
                     <div class="opciones" id="opciones-respuesta">
-                        <button class="opcion" id="opcion-0"></button>
-                        <button class="opcion" id="opcion-1"></button>
-                        <button class="opcion" id="opcion-2"></button>
+                     <button class="opcion boton-jugar" id="opcion-0"></button>
+                    <button class="opcion boton-jugar" id="opcion-1"></button>
+                    <button class="opcion boton-jugar" id="opcion-2"></button>
                     </div>
                 </div>
 
@@ -69,7 +68,7 @@
                     <h2>¡Juego terminado!</h2>
                     <p id="mensaje-final"></p>
                     <p>Puntaje final: <span id="puntaje">0</span></p>
-                    <button id="btn-jugar-de-nuevo">Jugar de nuevo</button>
+                    <button id="btn-jugar-de-nuevo" type="button" class="boton-jugar">Jugar de nuevo</button>
                 </div>
 
             </section>
