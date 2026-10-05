@@ -549,4 +549,4 @@ btnJugarDeNuevo.addEventListener(
   "click",
   reiniciarJuego
 );
-```
+
