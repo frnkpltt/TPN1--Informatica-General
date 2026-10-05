@@ -22,6 +22,18 @@ body {
   padding: 2em 8rem;
 }
 
+footer {
+  text-align: center;
+  margin-top: 2rem;
+  font-family: "Arvo", serif;
+  color: #f6b40e;
+}
+
+.linkfooter {
+  color:#29a521;
+  font-weight: bold;
+}
+
 /* ============================================================
    CONTENEDOR SOLIDO
    Envuelve todo el contenido del body en cada pagina
@@ -196,6 +208,7 @@ nav a:active {
   font-family: "Milonga";
   margin-top: 1rem;
   color: #f6b40e;
+  list-style: none;
 }
 
 
@@ -411,6 +424,7 @@ select {
   color: #f3f5f7;
   transform: scale(1.05);
 }
+
 .tablero {
   display: flex;
   flex-wrap: wrap;
