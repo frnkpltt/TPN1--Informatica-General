@@ -628,4 +628,5 @@ function comprobarGanador() {
        la partida continúa. */
     return false;
 }
-```
+
+
