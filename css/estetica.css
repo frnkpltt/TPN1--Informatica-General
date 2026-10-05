@@ -1,17 +1,24 @@
+```css
 /* ============================================================
    RESET BASICO
    ============================================================ */
+
+/* El selector universal se aplica a todos los elementos.
+   Sacamos los márgenes y espacios internos que vienen por defecto
+   y hacemos que el ancho incluya también el padding y el borde. */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+
 /* ============================================================
    FONDO GENERAL DEL SITIO
-   La imagen se ve alrededor del contenedor (fileteado repetido
-   verticalmente).
    ============================================================ */
+
+/* Configuramos el fondo general de todas las páginas.
+   La imagen del filete se repite solamente en el eje vertical. */
 body {
   background-color: #660503;
   background-image: url("../img/filete-borde.png");
@@ -22,10 +29,13 @@ body {
   padding: 2em 8rem;
 }
 
+
 /* ============================================================
-   CONTENEDOR SOLIDO
-   Envuelve todo el contenido del body en cada pagina
+   CONTENEDOR PRINCIPAL
    ============================================================ */
+
+/* Es el contenedor que mantiene todo el contenido de la página.
+   Tiene un ancho máximo y queda centrado automáticamente. */
 .contenedor {
   background-color: #1b4a73;
 
@@ -36,25 +46,29 @@ body {
   padding: 1.5rem;
 }
 
-/* ============================================================
-   TITULO CURVO (SVG) Y H1
-   El titulo-curvo es el SVG con textPath que usan todas las
-   paginas; h1 queda como respaldo por si alguna pagina usa un
-   titulo simple en vez del SVG
-   ============================================================ */
-.titulo-curvo, h1 {
 
+/* ============================================================
+   TITULO CURVO
+   ============================================================ */
+
+/* Configuramos el SVG que contiene el título curvo.
+   También se aplica a los h1 por si alguna página utiliza
+   un título tradicional. */
+.titulo-curvo, h1 {
   width: 200%;
   max-width: 50rem;
   display: block;
   margin: 0 auto;
 }
+
+/* Estilos específicos del texto dentro del SVG. */
 .titulo-curvo text {
   stroke: #f6b40e;
   stroke-width: 1px;
   text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.6);
 }
 
+/* Fuente, tamaño y color del título. */
 .titulo-curvo text, h1 {
   font-family: "Milonga", serif;
   font-weight: 550;
@@ -63,20 +77,22 @@ body {
   fill: #f6b40e;
 }
 
+
 /* ============================================================
    PANTALLA DE INICIO DEL JUEGO DE PREGUNTAS
-   Contenedor del boton "Empezar a jugar" antes de arrancar
    ============================================================ */
+
+/* Centra el contenido de la pantalla inicial. */
 #pantalla-inicio {
   text-align: center;
 }
 
+
 /* ============================================================
    MENU DE NAVEGACION
-   Igual en las 6 paginas del sitio
    ============================================================ */
 
-
+/* Fondo, separación interna y bordes del menú. */
 nav {
   background-color: #660503;
   padding: 1rem;
@@ -84,6 +100,8 @@ nav {
   text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.6);
 }
 
+/* Colocamos los elementos del menú en una fila
+   y los centramos horizontalmente. */
 nav ul {
   display: flex;
   flex-direction: row;
@@ -92,6 +110,7 @@ nav ul {
   list-style: none;
 }
 
+/* Estilos de los enlaces del menú. */
 nav a {
   font-family: "Arvo", serif;
   font-weight: 400;
@@ -105,29 +124,35 @@ nav a {
   transition: transform 0.15s;
 }
 
+/* Cuando pasamos el mouse por encima del enlace,
+   aparece el subrayado y se mueve ligeramente hacia arriba. */
 nav a:hover {
   text-decoration: underline;
   transform: translateY(-2px);
 }
 
+/* Cuando hacemos click sobre el enlace,
+   se invierten los colores. */
 nav a:active {
   background-color: #f6b40e;
   color: #660503;
 }
 
+
 /* ============================================================
-   SECCION DE INTRODUCCION Y SECTIONS GENERICAS
-   ".intro" es el bloque de texto del index; "section" sin clase
-   hereda el mismo fondo/padding por defecto en cualquier pagina
+   SECCIONES GENERALES
    ============================================================ */
+
+/* Este estilo se aplica a la introducción y a las secciones.
+   Define el fondo, el espacio interno y la separación superior. */
 .intro, section {
   background-color: #1e4d1b;
   padding: 1.5rem;
   margin-top: 1.5rem;
-
 }
 
-.intro p  {
+/* Estilos para los párrafos de la introducción. */
+.intro p {
   font-family: "Milonga", serif;
   font-weight: 400;
   font-style: normal;
@@ -137,41 +162,52 @@ nav a:active {
   text-align: center;
 }
 
+/* Centra el primer párrafo de la introducción. */
 .intro > article:first-child p {
   text-align: center;
 }
+
 
 /* ============================================================
    SECCION DE INTEGRANTES
    ============================================================ */
 
+/* Limitamos el ancho de la lista y la centramos. */
 .integrantes-lista {
   width: min(100%, 54rem);
   margin: 0 auto;
 }
 
+/* Cada integrante se organiza en una fila.
+   La imagen queda a un lado y el texto al otro. */
 .integrante {
   display: flex;
   align-items: center;
   gap: 1.5rem;
   margin: 1.5rem 0;
+
+  /* Borde amarillo alrededor de cada integrante. */
   border: 3px solid #f6b40e;
-border-radius: 10px;
-padding: 20px;
+  border-radius: 10px;
+  padding: 20px;
 }
 
+/* El texto ocupa el espacio disponible
+   y queda centrado. */
 .integrante article {
   flex: 1;
   min-width: 0;
   text-align: center;
 }
 
+/* Estilo del nombre de cada integrante. */
 .integrante h2 {
   font-family: "Milonga", serif;
   color: #f6b40e;
   margin-bottom: 0.5rem;
 }
 
+/* Tamaño y posición de las imágenes de los integrantes. */
 .integrante img {
   display: block;
   width: min(30%, 240px);
@@ -180,6 +216,9 @@ padding: 20px;
   object-fit: contain;
 }
 
+
+/* En pantallas chicas cambiamos la disposición
+   para que imagen y texto queden uno debajo del otro. */
 @media (max-width: 600px) {
   .integrante {
     flex-direction: column;
@@ -192,17 +231,20 @@ padding: 20px;
   }
 }
 
+
 /* ============================================================
    REGLAS DEL JUEGO DE DADOS
    ============================================================ */
 
+/* Estilo de la lista de reglas del Diez Mil. */
 .reglasdados {
   font-family: "Milonga";
   margin-top: 1rem;
   color: #f6b40e;
 }
 
-
+/* Organizamos los cinco dados en una fila.
+   Si no entran, pueden pasar a otra línea. */
 .dados {
   display: flex;
   flex-wrap: wrap;
@@ -212,33 +254,39 @@ padding: 20px;
   width: 100%;
 }
 
+/* Tamaño de cada dado. */
 .dado {
   width: 100px;
   height: 100px;
 }
 
-/* Mientras el dado "tira" (la clase la pone y la saca el JS) da una
-   vuelta completa en 0.5s. La transición está en .rodando y no en .dado
-   a propósito: al sacar la clase el dado vuelve a 0° de golpe, y como
-   360° y 0° se ven iguales, no hay salto ni giro de vuelta. */
+
+/* Clase que utiliza JavaScript mientras el dado está girando.
+   CSS se encarga de la animación visual. */
 .dado.rodando {
   transform: rotate(360deg);
   transition: transform 0.5s;
 }
 
+
+/* Contenedor general del juego de dados.
+   Organizamos todos sus elementos en una columna. */
 .seccionjuego {
-<<<<<<< HEAD
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 1rem;
   margin: 1.5rem 0;
-=======
-  text-align: center;
->>>>>>> cf710d03f92f4a8fd1f6eda5ecd186fcb142f39d
   font-family: "Milonga";
   color: #f6b40e;
 }
+
+
+/* ============================================================
+   BOTONES DEL DIEZ MIL
+   ============================================================ */
+
+/* Estilo de los botones del juego. */
 #acciones button {
   display: inline-block;
   background-color: #660503;
@@ -253,80 +301,91 @@ padding: 20px;
   font-size: 1rem;
 }
 
-<<<<<<< HEAD
+/* Efecto cuando pasamos el mouse por encima. */
 #acciones button:hover {
   transform: translateY(-2px);
 }
 
+/* Efecto mientras hacemos click. */
 #acciones button:active {
   background-color: #f6b40e;
   color: #660503;
 }
 
+
+/* ============================================================
+   INFORMACION DEL TURNO
+   ============================================================ */
+
+/* Centra los puntos obtenidos durante el turno. */
 #puntosTurno {
-    text-align: center;
+  text-align: center;
 }
 
+
+/* Colocamos los botones uno al lado del otro
+   y los centramos. */
 #acciones {
-    text-align: center;
-    margin: 15px 0;
-}
-
-#mensajeJuego {
-    text-align: center;
-}
-
-.dados {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 15px;
-    margin: 25px 0;
-}
-
-#puntajes {
-    display: flex;
-    justify-content: center;
-    gap: 100px;
-    text-align: center;
-    margin-top: 25px;
-}
-
-#turno {
-    text-align: center;
-    margin-top: 20px;
-}
-=======
-.contenidojuego {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  justify-content: center;
   gap: 0.75rem;
-  width: min(100%, 54rem);
-  margin: 0 auto;
+  margin: 15px 0;
 }
 
-#puntajes {
+
+/* Centra el mensaje que aparece durante el juego. */
+#mensajeJuego {
+  text-align: center;
+}
+
+
+/* ============================================================
+   DADOS
+   ============================================================ */
+
+/* Centra los cinco dados y deja espacio entre ellos.
+   flex-wrap permite que se acomoden si la pantalla es más chica. */
+.dados {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 2rem;
+  align-items: center;
+  gap: 15px;
+  margin: 25px 0;
   width: 100%;
 }
 
-#acciones {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.75rem;
-}
 
->>>>>>> cf710d03f92f4a8fd1f6eda5ecd186fcb142f39d
 /* ============================================================
-   TARJETAS DE JUEGO (home)
-   Cada <article class="tarjeta-juego"> dentro de section.juegos
+   PUNTAJES
    ============================================================ */
 
+/* Coloca Jugador y Computadora uno al lado del otro
+   y deja espacio entre ambos. */
+#puntajes {
+  display: flex;
+  justify-content: center;
+  gap: 100px;
+  width: 100%;
+  text-align: center;
+  margin-top: 25px;
+}
+
+
+/* Centra la información del turno actual. */
+#turno {
+  text-align: center;
+  margin-top: 20px;
+}
+
+
+/* ============================================================
+   TARJETAS DE JUEGO DEL HOME
+   ============================================================ */
+
+/* Cada juego del inicio funciona como una tarjeta.
+   Los elementos se organizan en columna y se agrega
+   un borde amarillo. */
 .tarjeta-juego {
   display: flex;
   flex-direction: column;
@@ -340,19 +399,19 @@ padding: 20px;
   padding: 1.5rem;
 }
 
+/* Título de cada tarjeta de juego. */
 .tarjeta-juego h2 {
   font-family: "Milonga", serif;
   font-size: 2.8rem;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
 }
 
+
 /* ============================================================
-   BOTON GENERICO .boton-jugar
-   Compartido en todo el sitio: tarjetas de juego del home,
-   "Empezar a jugar" y las opciones de respuesta del juego de
-   preguntas. No es exclusivo de ninguna pagina en particular.
+   BOTON GENERICO
    ============================================================ */
 
+/* Estilo que comparten diferentes botones del sitio. */
 .boton-jugar {
   display: inline-block;
   background-color: #660503;
@@ -367,20 +426,24 @@ padding: 20px;
   font-size: 1rem;
 }
 
+/* Efecto al pasar el mouse. */
 .boton-jugar:hover {
   transform: translateY(-2px);
 }
 
+/* Efecto al hacer click. */
 .boton-jugar:active {
   background-color: #f6b40e;
   color: #660503;
 }
 
+
 /* ============================================================
-   IMAGENES DENTRO DE ARTICLE (regla defensiva generica)
-   Evita que cualquier imagen dentro de un article se desborde,
-   sin forzar ningun layout especifico
+   IMAGENES DENTRO DE ARTICLE
    ============================================================ */
+
+/* Evita que las imágenes sean más grandes que su contenedor
+   y las centra horizontalmente. */
 article img {
   max-width: 100%;
   height: auto;
@@ -388,18 +451,24 @@ article img {
   margin: 0 auto;
 }
 
+
 /* ============================================================
    JUEGO DE CARTAS: QUIEN ES QUIEN
    ============================================================ */
+
+/* Tamaño de las imágenes de las tarjetas del juego. */
 .tarjeta-juego img {
   width: 400px;
   border-radius: 8px;
 }
 
+
+/* Centra la sección de reglas. */
 .reglas {
   text-align: center;
 }
 
+/* Estilo de los párrafos de las reglas. */
 .reglas p {
   font-family: "Arvo", serif;
   color: #660503;
@@ -407,12 +476,15 @@ article img {
   font-weight: 700;
 }
 
+/* Estilo del título de las reglas. */
 .reglas h2 {
   font-family: "Arvo", serif;
   color: #1b4a73;
   text-decoration: underline;
 }
 
+
+/* Organizamos las preguntas usando Flexbox. */
 .preguntas,
 .adivinar {
   display: flex;
@@ -421,6 +493,7 @@ article img {
   gap: 1rem;
 }
 
+/* Organización de las preguntas. */
 .preguntas {
   display: flex;
   align-items: center;
@@ -428,8 +501,8 @@ article img {
   gap: 1rem;
 }
 
-/* Ocupa el espacio libre entre el boton y el puntaje: por eso el puntaje queda pegado a la derecha */
 
+/* El texto de respuesta ocupa el espacio disponible. */
 #respuesta {
   flex: 1;
   font-family: "Milonga", serif;
@@ -438,6 +511,8 @@ article img {
   font-size: 1.2rem;
 }
 
+
+/* Estilo del puntaje. */
 .puntaje {
   font-family: "Milonga", serif;
   color: #f6b40e;
@@ -445,6 +520,8 @@ article img {
   font-size: 1.2rem;
 }
 
+
+/* Estilo de los botones de jugar. */
 .boton-jugar {
   display: inline-block;
   background-color: #660503;
@@ -456,6 +533,8 @@ article img {
   transition: transform 0.15s;
 }
 
+
+/* Estilo de los menús desplegables. */
 select {
   font-family: "Milonga", serif;
   padding: 0.5rem;
@@ -463,6 +542,8 @@ select {
   border: none;
 }
 
+
+/* Estilo de los mensajes de respuesta y resultado final. */
 #respuesta,
 #resultado-final {
   font-family: "Milonga", serif;
@@ -470,17 +551,27 @@ select {
   font-weight: 700;
 }
 
+
+/* Agregamos una transición para que el cambio visual
+   de la respuesta sea más suave. */
 #respuesta {
   transition: background-color 0.3s, transform 0.2s;
 }
 
 
-
+/* Clase que puede agregar JavaScript para resaltar la respuesta. */
 #respuesta.resaltada {
   backrground-color: #f6b40e;
   color: #f3f5f7;
   transform: scale(1.05);
 }
+
+
+/* ============================================================
+   TABLERO DEL JUEGO DE CARTAS
+   ============================================================ */
+
+/* Organizamos las cartas en filas y las centramos. */
 .tablero {
   display: flex;
   flex-wrap: wrap;
@@ -488,6 +579,8 @@ select {
   justify-content: center;
 }
 
+
+/* Cada carta tiene un tamaño y estilo propio. */
 .carta {
   display: flex;
   flex-direction: column;
@@ -500,6 +593,8 @@ select {
   transition: opacity 0.2s;
 }
 
+
+/* Tamaño y forma de la imagen de cada carta. */
 .carta img {
   width: 100px;
   height: 150px;
@@ -507,6 +602,8 @@ select {
   border-radius: 6px;
 }
 
+
+/* Texto debajo de cada carta. */
 .carta p {
   font-family: "Milonga", serif;
   font-size: 0.90rem;
@@ -515,66 +612,84 @@ select {
   margin-top: 0.5rem;
 }
 
-/* Clase que el JS agrega/saca con classList.toggle() cada vez
-   que se toca una carta para descartarla */
+
+/* Esta clase la agrega JavaScript cuando una carta
+   es descartada, haciendo que se vea casi transparente. */
 .carta.descartada {
   opacity: 0.1;
 }
+
 
 /* ============================================================
    PAGINA DE RANKINGS
    ============================================================ */
 
-   .rankings {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    justify-content: center;
-   }
+/* Organizamos las tarjetas de los rankings. */
+.rankings {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+}
 
-   .tarjeta-record {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
-    background-color: #1b4a73;
-    padding: 1rem 1.5rem;
-    border-radius: 8px;
-    color: #f6b40e;
-    min-width: 160px;
-   }
 
-   .tarjeta-record h2 {
-    font-family: "Milonga", serif;
-    font-size: 1.3rem;
-   }
+/* Cada tarjeta que contiene un récord. */
+.tarjeta-record {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: #1b4a73;
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  color: #f6b40e;
+  min-width: 160px;
+}
 
-   .tarjeta-record p {
-    font-family: "Arvo", serif;
-    font-size: 1.4rem;
-    font-weight: 700;
-   }
 
-   .tarjeta-record ol {
+/* Título de cada récord. */
+.tarjeta-record h2 {
+  font-family: "Milonga", serif;
+  font-size: 1.3rem;
+}
+
+
+/* Puntaje principal del récord. */
+.tarjeta-record p {
+  font-family: "Arvo", serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+
+/* Lista de posiciones del ranking. */
+.tarjeta-record ol {
   font-family: "Arvo", serif;
   list-style-position: inside;
   padding: 0;
   width: 100%;
 }
 
+
+/* Cada posición del ranking. */
 .tarjeta-record li {
   font-size: 1.1rem;
   padding: 0.2rem 0;
 }
 
+
+/* Destacamos especialmente el primer puesto. */
 .tarjeta-record li:first-child {
   font-weight: 700;
   font-size: 1.3rem;
 }
 
+
 /* ============================================================
    JUEGO DE PREGUNTAS: CUANTA CALLE TENES?
    ============================================================ */
+
+/* Contenedor donde se muestra el estado actual del juego. */
 #estado-juego {
   border: 3px solid #f6b40e;
   border-radius: 8px;
@@ -582,6 +697,9 @@ select {
   margin-top: 1.5rem;
   text-align: center;
 }
+
+
+/* Estilo de la pregunta actual. */
 #pregunta-actual {
   font-family: "Milonga", serif;
   color: #f6b40e;
@@ -589,6 +707,10 @@ select {
   margin-bottom: 1rem;
   text-align: center;
 }
+
+
+/* Organizamos las opciones de respuesta en una columna
+   y las centramos. */
 .opciones {
   display: flex;
   flex-direction: column;
@@ -596,6 +718,9 @@ select {
   gap: 1rem;
   margin-top: 1.5rem;
 }
+
+
+/* Estilo del resultado final del juego. */
 #resultado-final {
   font-family: "Milonga", serif;
   color: #f6b40e;
@@ -603,6 +728,10 @@ select {
   margin: 1rem;
   text-align: center;
 }
+
+
+/* Separa el botón de jugar nuevamente del resultado. */
 #btn-jugar-de-nuevo {
   margin-top: 1rem;
 }
+```
