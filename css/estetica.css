@@ -154,7 +154,6 @@ nav a:hover {
 
 .dados {
   display: flex;
-  justify-content: center;
   gap: 1rem;
   margin-top: 1rem;
   font-size: 4rem;
@@ -239,8 +238,43 @@ layout como hacía el "article" viejo
   gap: 1rem;
 }
 
+.preguntas {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+/* Ocupa el espacio libre entre el boton y el puntaje: por eso el puntaje queda pegado a la derecha */
+
+#respuesta {
+  flex: 1;
+  font-family: "Milonga", serif;
+  color: #f6b40e;
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+.puntaje {
+  font-family: "Milonga", serif;
+  color: #f6b40e;
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+.boton-jugar {
+  display: inline-block;
+  background-color: #660503;
+  color: #f6b40e;
+  font-family: "Milonga", serif;
+  text-decoration: none;
+  padding: 0.6rem 1.5rem;
+  border-radius: 4px;
+  transition: transform 0.15s;
+}
+
 select {
-  font-family: "Arvo", serif;
+  font-family: "Milonga", serif;
   padding: 0.5rem;
   border-radius: 4px;
   border: none;
@@ -248,7 +282,7 @@ select {
 
 #respuesta, 
 #resultado-final {
-  font-family: "Arvo", serif;
+  font-family: "Milonga", serif;
   color: #f6b40e;
   font-weight: 700;
 }
@@ -256,6 +290,8 @@ select {
 #respuesta {
   transition: background-color 0.3s, transform 0.2s;
 }
+
+
 
 #respuesta.resaltada {
   backrground-color: #f6b40e;
@@ -289,8 +325,8 @@ select {
 }
 
 .carta p {
-  font-family: "Arvo", serif;
-  font-size: 0.80rem;
+  font-family: "Milonga", serif;
+  font-size: 0.90rem;
   color: #f6b40e;
   text-align: center;
   margin-top: 0.5rem;
