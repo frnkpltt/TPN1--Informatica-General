@@ -155,11 +155,15 @@ nav a:active {
   align-items: center;
   gap: 1.5rem;
   margin: 1.5rem 0;
+  border: 3px solid #f6b40e;
+border-radius: 10px;
+padding: 20px;
 }
 
 .integrante article {
   flex: 1;
   min-width: 0;
+  text-align: center;
 }
 
 .integrante h2 {
@@ -222,13 +226,69 @@ nav a:active {
 
 .seccionjuego {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 1.5rem;
+  gap: 1rem;
   margin: 1.5rem 0;
   font-family: "Milonga";
   color: #f6b40e;
 }
+#acciones button {
+  display: inline-block;
+  background-color: #660503;
+  color: #f6b40e;
+  font-family: "Milonga", serif;
+  text-decoration: none;
+  padding: 0.6rem 1.5rem;
+  border-radius: 4px;
+  transition: transform 0.15s;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+}
 
+#acciones button:hover {
+  transform: translateY(-2px);
+}
+
+#acciones button:active {
+  background-color: #f6b40e;
+  color: #660503;
+}
+
+#puntosTurno {
+    text-align: center;
+}
+
+#acciones {
+    text-align: center;
+    margin: 15px 0;
+}
+
+#mensajeJuego {
+    text-align: center;
+}
+
+.dados {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin: 25px 0;
+}
+
+#puntajes {
+    display: flex;
+    justify-content: center;
+    gap: 100px;
+    text-align: center;
+    margin-top: 25px;
+}
+
+#turno {
+    text-align: center;
+    margin-top: 20px;
+}
 /* ============================================================
    TARJETAS DE JUEGO (home)
    Cada <article class="tarjeta-juego"> dentro de section.juegos
