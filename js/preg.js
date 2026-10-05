@@ -1,7 +1,27 @@
-```javascript
 /* ===========================================
    preg.js
    Juego "Cuanta calle tenés?" - categoria geografia
+
+   Cada pregunta es del tipo "¿A qué provincia pertenece la localidad
+   de X?" y se arma con datos reales de la API pública Georef.
+
+   Reglas:
+     - 3 opciones por pregunta y 20 segundos para responder.
+     - Si se acaba el tiempo, cuenta como error.
+     - La partida termina al llegar a la pregunta 15 o al acumular
+       3 errores (lo que pase primero).
+     - El puntaje es la cantidad de aciertos y se guarda en el top 5
+       ("recordPreguntas") al terminar la partida.
+
+   Estructura del archivo:
+     1. Variables del estado del juego
+     2. Referencias al DOM
+     3. Guardado del récord (localStorage)
+     4. Pregunta desde la API Georef (fetch)
+     5. Funciones auxiliares (buscar en un array, mezclar)
+     6. Contadores en pantalla y timer
+     7. Flujo del juego: cargar, responder, terminar, reiniciar, empezar
+     8. Eventos de los botones
    =========================================== */
 
 
@@ -20,7 +40,10 @@ let errores = 0;
 /* El jugador pierde cuando llega a 3 errores. */
 const maxErrores = 3;
 
-/* Cantidad de aciertos necesarios para completar el juego. */
+/* Número de pregunta en el que termina la partida con éxito.
+   OJO: aunque el nombre dice "aciertos", en responder() se compara
+   contra rondaActual (en qué pregunta estamos), no contra la cantidad
+   de aciertos. Como vale 15, equivale a "llegar a la pregunta 15". */
 const metaAciertos = 15;
 
 /* Tiempo disponible para responder cada pregunta. */
@@ -292,7 +315,8 @@ function iniciarTimer() {
 
 
     /* Si llega a cero, detenemos el intervalo
-       y contamos la respuesta como incorrecta. */
+       y contamos la respuesta como incorrecta: responder(null)
+       simula una respuesta vacía, que nunca coincide con la correcta. */
     if (tiempoRestante <= 0) {
 
       clearInterval(intervaloTimer);
@@ -392,8 +416,10 @@ function responder(opcionElegida) {
     terminarJuego(false);
 
 
-  /* Si llegó a la cantidad de aciertos necesaria,
-     termina el juego como completado. */
+  /* Si ya se respondió la pregunta número 15 (y no llegó a 3 errores),
+     termina el juego como completado. Ojo: se compara la ronda en la que
+     está (rondaActual), no los aciertos, así que se puede completar la
+     partida habiendo cometido hasta 2 errores. */
   } else if (rondaActual >= metaAciertos) {
 
     terminarJuego(true);
@@ -549,4 +575,3 @@ btnJugarDeNuevo.addEventListener(
   "click",
   reiniciarJuego
 );
-```

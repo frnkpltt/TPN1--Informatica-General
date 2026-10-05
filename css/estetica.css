@@ -1,4 +1,28 @@
-```css
+/* ============================================================
+   estetica.css
+   Única hoja de estilos de todo el sitio (la consigna pide una sola).
+
+   Paleta de colores:
+     #660503  rojo oscuro  -> fondo general, menú y botones
+     #1b4a73  azul         -> contenedor principal, cartas y tarjetas de récord
+     #1e4d1b  verde        -> secciones
+     #f6b40e  dorado       -> textos, bordes y títulos
+
+   Tipografías (Google Fonts, se cargan desde el HTML de cada página):
+     "Milonga" -> títulos y textos de los juegos
+     "Arvo"    -> menú y textos más largos
+
+   Organización: de lo general a lo particular. Primero el reset, el fondo
+   y lo que comparten todas las páginas (contenedor, título, menú,
+   secciones); después los estilos de cada página: integrantes, juego de
+   dados, tarjetas del inicio, juego de cartas, rankings y juego de preguntas.
+
+   Algunas reglas aparecen más de una vez (.dados, .boton-jugar, .preguntas,
+   #respuesta). CSS las combina: si dos reglas tienen la misma especificidad
+   y definen la misma propiedad, gana la que está más abajo en el archivo.
+   ============================================================ */
+
+
 /* ============================================================
    RESET BASICO
    ============================================================ */
@@ -18,7 +42,9 @@
    ============================================================ */
 
 /* Configuramos el fondo general de todas las páginas.
-   La imagen del filete se repite solamente en el eje vertical. */
+   La imagen del filete (arte decorativo típico de Buenos Aires) se repite
+   solamente en el eje vertical. La ruta es relativa a ESTE archivo:
+   "../img/" sale de la carpeta css/ y entra en img/. */
 body {
   background-color: #660503;
   background-image: url("../img/filete-borde.png");
@@ -53,7 +79,9 @@ body {
 
 /* Configuramos el SVG que contiene el título curvo.
    También se aplica a los h1 por si alguna página utiliza
-   un título tradicional. */
+   un título tradicional.
+   El width: 200% queda limitado por max-width, así que el título
+   nunca pasa de 50rem de ancho. */
 .titulo-curvo, h1 {
   width: 200%;
   max-width: 50rem;
@@ -61,7 +89,9 @@ body {
   margin: 0 auto;
 }
 
-/* Estilos específicos del texto dentro del SVG. */
+/* Estilos específicos del texto dentro del SVG.
+   En un SVG el relleno se define con fill y el contorno con stroke
+   (no con color). */
 .titulo-curvo text {
   stroke: #f6b40e;
   stroke-width: 1px;
@@ -144,7 +174,9 @@ nav a:active {
    ============================================================ */
 
 /* Este estilo se aplica a la introducción y a las secciones.
-   Define el fondo, el espacio interno y la separación superior. */
+   Define el fondo, el espacio interno y la separación superior.
+   Ojo: "section" sin clase afecta a TODAS las <section> del sitio, por
+   eso todas tienen este fondo verde. */
 .intro, section {
   background-color: #1e4d1b;
   padding: 1.5rem;
@@ -217,7 +249,8 @@ nav a:active {
 }
 
 
-/* En pantallas chicas cambiamos la disposición
+/* Media query: estas reglas solo se aplican cuando la ventana mide
+   600px de ancho o menos. En pantallas chicas cambiamos la disposición
    para que imagen y texto queden uno debajo del otro. */
 @media (max-width: 600px) {
   .integrante {
@@ -261,8 +294,12 @@ nav a:active {
 }
 
 
-/* Clase que utiliza JavaScript mientras el dado está girando.
-   CSS se encarga de la animación visual. */
+/* Clase que JavaScript le pone al dado mientras "tira" y le saca a los
+   500 ms (ver animarDado en diezmil.js). CSS se encarga de la animación:
+   una vuelta completa en 0.5s.
+   La transición está acá y no en .dado a propósito: al sacar la clase el
+   dado vuelve a 0° de golpe y, como 360° y 0° se ven iguales, no hay salto
+   ni giro de vuelta. */
 .dado.rodando {
   transform: rotate(360deg);
   transition: transform 0.5s;
@@ -286,7 +323,8 @@ nav a:active {
    BOTONES DEL DIEZ MIL
    ============================================================ */
 
-/* Estilo de los botones del juego. */
+/* Estilo de los botones del juego (Tirar dados, Plantarse, Jugar de nuevo).
+   Tiene el mismo aspecto que .boton-jugar, que está más abajo. */
 #acciones button {
   display: inline-block;
   background-color: #660503;
@@ -344,7 +382,10 @@ nav a:active {
    ============================================================ */
 
 /* Centra los cinco dados y deja espacio entre ellos.
-   flex-wrap permite que se acomoden si la pantalla es más chica. */
+   flex-wrap permite que se acomoden si la pantalla es más chica.
+   Esta regla repite a .dados de la sección "REGLAS DEL JUEGO DE DADOS".
+   Como viene después y tiene la misma especificidad, sus valores
+   (gap, margin, align-items) pisan a los de la primera. */
 .dados {
   display: flex;
   flex-wrap: wrap;
@@ -411,7 +452,10 @@ nav a:active {
    BOTON GENERICO
    ============================================================ */
 
-/* Estilo que comparten diferentes botones del sitio. */
+/* Estilo que comparten diferentes botones del sitio: los del Quién es
+   Quién y el "Click para jugar" de las tarjetas del inicio.
+   Más abajo hay una segunda definición de .boton-jugar; las dos se
+   combinan. */
 .boton-jugar {
   display: inline-block;
   background-color: #660503;
@@ -443,7 +487,8 @@ nav a:active {
    ============================================================ */
 
 /* Evita que las imágenes sean más grandes que su contenedor
-   y las centra horizontalmente. */
+   y las centra horizontalmente. Es una regla defensiva: no define
+   tamaños, solo impide que una imagen se desborde. */
 article img {
   max-width: 100%;
   height: auto;
@@ -456,7 +501,8 @@ article img {
    JUEGO DE CARTAS: QUIEN ES QUIEN
    ============================================================ */
 
-/* Tamaño de las imágenes de las tarjetas del juego. */
+/* Tamaño de la imagen de cada tarjeta de juego de la página de inicio.
+   (No son las cartas del Quién es Quién: esas son .carta img, más abajo.) */
 .tarjeta-juego img {
   width: 400px;
   border-radius: 8px;
@@ -484,7 +530,9 @@ article img {
 }
 
 
-/* Organizamos las preguntas usando Flexbox. */
+/* La zona de preguntas y la de "adivinar" son una fila con Flexbox:
+   desplegable, botón y mensaje uno al lado del otro. flex-wrap permite
+   que pasen a otra línea si no entran. */
 .preguntas,
 .adivinar {
   display: flex;
@@ -493,7 +541,7 @@ article img {
   gap: 1rem;
 }
 
-/* Organización de las preguntas. */
+/* Repite la regla de arriba solo para .preguntas. */
 .preguntas {
   display: flex;
   align-items: center;
@@ -502,7 +550,9 @@ article img {
 }
 
 
-/* El texto de respuesta ocupa el espacio disponible. */
+/* El texto de respuesta ocupa todo el espacio libre de la fila (flex: 1):
+   queda entre el botón "Preguntar" y el puntaje, y empuja al puntaje
+   hacia la derecha. */
 #respuesta {
   flex: 1;
   font-family: "Milonga", serif;
@@ -521,7 +571,9 @@ article img {
 }
 
 
-/* Estilo de los botones de jugar. */
+/* Segunda definición de .boton-jugar (la primera está en "BOTON GENERICO").
+   Las dos se combinan: como esta no repite border, cursor ni font-size,
+   esos valores siguen viniendo de la primera. */
 .boton-jugar {
   display: inline-block;
   background-color: #660503;
@@ -559,7 +611,9 @@ select {
 }
 
 
-/* Clase que puede agregar JavaScript para resaltar la respuesta. */
+/* Clase que JavaScript saca y vuelve a poner cada vez que llega una
+   respuesta nueva (ver el botón "Preguntar" en qesq.js), para que la
+   transición se vea de nuevo aunque el texto sea igual al anterior. */
 #respuesta.resaltada {
   backrground-color: #f6b40e;
   color: #f3f5f7;
@@ -654,7 +708,8 @@ select {
 }
 
 
-/* Puntaje principal del récord. */
+/* Texto suelto dentro de la tarjeta (quedó de cuando cada récord era un
+   solo número; ahora los puntajes van en la lista <ol> de abajo). */
 .tarjeta-record p {
   font-family: "Arvo", serif;
   font-size: 1.4rem;
@@ -734,4 +789,3 @@ select {
 #btn-jugar-de-nuevo {
   margin-top: 1rem;
 }
-```
