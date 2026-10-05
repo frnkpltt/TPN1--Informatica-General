@@ -1,4 +1,4 @@
-```javascript
+javascript
 /* ===========================================
    preg.js
    Juego "Cuanta calle tenés?" - categoria geografia
