@@ -198,11 +198,26 @@ nav a:active {
   color: #f6b40e;
 }
 
+
 .dados {
   display: flex;
   gap: 1rem;
-  margin-top: 1rem;
-  font-size: 4rem;
+  justify-content: center;
+  margin: 1.5rem 0;
+}
+
+.dado {
+  width: 100px;
+  height: 100px;
+}
+
+/* Mientras el dado "tira" (la clase la pone y la saca el JS) da una
+   vuelta completa en 0.5s. La transición está en .rodando y no en .dado
+   a propósito: al sacar la clase el dado vuelve a 0° de golpe, y como
+   360° y 0° se ven iguales, no hay salto ni giro de vuelta. */
+.dado.rodando {
+  transform: rotate(360deg);
+  transition: transform 0.5s;
 }
 
 .seccionjuego {
@@ -249,7 +264,7 @@ nav a:active {
   display: inline-block;
   background-color: #660503;
   color: #f6b40e;
-  font-family: "Arvo", serif;
+  font-family: "Milonga", serif;
   text-decoration: none;
   padding: 0.6rem 1.5rem;
   border-radius: 4px;

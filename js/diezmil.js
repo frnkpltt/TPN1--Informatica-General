@@ -37,6 +37,58 @@ let puntajeComputadora = 0;
 
 let yaTiro = false;
 
+// ---------- Récord: partidas ganadas por visita ----------
+
+// Cuántas partidas le ganó el jugador a la computadora desde que abrió
+// la página. "Jugar de nuevo" NO lo reinicia: solo vuelve a 0 cuando el
+// jugador se va de la página (ver el evento pagehide, más abajo).
+let partidasGanadas = 0;
+const partidasGanadasEl = document.getElementById("puntaje");
+
+// Misma función que en el juego de cartas y en el de preguntas: guarda
+// un puntaje en el top 5 histórico de localStorage
+function guardarEnRankings(clave, puntajeNuevo) {
+    const historial = JSON.parse(localStorage.getItem(clave) || '[]');
+    historial.push(puntajeNuevo);
+    historial.sort((a, b) => b - a); // Orden descendente
+    const top5 = historial.slice(0, 5); // Solo los 5 mejores
+    localStorage.setItem(clave, JSON.stringify(top5));
+}
+
+// ---------- Imágenes y animación de los dados ----------
+
+// Si cambian los nombres de archivo o la carpeta, es lo único que hay
+// que tocar en el JS.
+const IMG_GIRANDO = "img/caras-dados/dado.png";
+
+// El índice 0 queda vacío a propósito: así CARAS_DADO[3] es directamente
+// la imagen del dado que muestra el 3, sin restar 1 cada vez.
+const CARAS_DADO = [
+    null,
+    "img/caras-dados/1.png",
+    "img/caras-dados/2.png",
+    "img/caras-dados/3.png",
+    "img/caras-dados/4.png",
+    "img/caras-dados/5.png",
+    "img/caras-dados/6.png"
+];
+
+const dadosImg = [dado1, dado2, dado3, dado4, dado5];
+
+// Muestra el dado "girando" medio segundo y después lo deja en la cara
+// que realmente salió (valorFinal). La clase "rodando" le da un giro
+// por CSS mientras dura ese medio segundo.
+function animarDado(img, valorFinal) {
+    img.src = IMG_GIRANDO;
+    img.classList.add("rodando");
+
+    setTimeout(function() {
+        img.src = CARAS_DADO[valorFinal];
+        img.alt = "Dado que muestra " + valorFinal;
+        img.classList.remove("rodando");
+    }, 500);
+}
+
 // Función para darle valores aleatorios a los dados
 
 function tirarDado() {
@@ -150,11 +202,11 @@ btnTirar.addEventListener("click", function() {
     dados[3] = tirarDado();
     dados[4] = tirarDado();
 
-    dado1.textContent = dados[0];
-    dado2.textContent = dados[1];
-    dado3.textContent = dados[2];
-    dado4.textContent = dados[3];
-    dado5.textContent = dados[4];
+    // Cada dado "tira" con animación y recién a los 500ms queda
+    // mostrando su valor real
+    for (let i = 0; i < dadosImg.length; i++) {
+        animarDado(dadosImg[i], dados[i]);
+    }
 
 
     let puntos = calcularPuntos(dados);
@@ -242,8 +294,9 @@ function reiniciarPartida() {
     yaTiro = false;
 
     // Lo que se ve en pantalla
-    for (let dado of [dado1, dado2, dado3, dado4, dado5]) {
-        dado.textContent = "🎲";
+    for (let img of dadosImg) {
+        img.src = IMG_GIRANDO;
+        img.alt = "Dado sin tirar";
     }
     puntajeTurno.textContent = puntosTurno;
     puntajeJugadorHTML.textContent = "0 puntos";
@@ -259,11 +312,24 @@ function reiniciarPartida() {
 
 btnJugarDeNuevo.addEventListener("click", reiniciarPartida);
 
+// Cuando el jugador se va de la página (cierra la pestaña, recarga o
+// entra a otra sección del sitio), se guarda cuántas partidas ganó y el
+// contador vuelve a 0. Si no ganó ninguna, no se guarda nada.
+window.addEventListener("pagehide", function() {
+    if (partidasGanadas > 0) {
+        guardarEnRankings("recordDados", partidasGanadas);
+        partidasGanadas = 0;
+        partidasGanadasEl.textContent = partidasGanadas;
+    }
+});
+
 function comprobarGanador() {
 
     if (puntajeJugador >= 10000) {
 
         mensajeJuego.textContent = "¡Ganaste! Llegaste a 10.000 puntos.";
+        partidasGanadas++;
+        partidasGanadasEl.textContent = partidasGanadas;
         terminarPartida();
 
         return true;
