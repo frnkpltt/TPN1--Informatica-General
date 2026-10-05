@@ -19,6 +19,9 @@ const jugadorActualHTML = document.getElementById("jugadorActual"); // Actualiza
 // pero nunca se había declarado, y eso tiraba un ReferenceError.
 const mensajeJuego = document.getElementById("mensajeJuego");
 
+// Botón que aparece recién cuando termina la partida
+const btnJugarDeNuevo = document.getElementById("btnJugarDeNuevo");
+
 
 // Array para guardar los valores de los dados y variables para puntajes y turnos
 
@@ -217,12 +220,51 @@ btnPlantarse.addEventListener("click", function() {
 
 });
 
+// Deja el juego en estado "terminado": bloquea los botones de juego
+// y muestra el de "Jugar de nuevo". Se llama desde comprobarGanador(),
+// que es el único lugar por el que pasa tanto la victoria del jugador
+// como la de la computadora.
+function terminarPartida() {
+    turno = "finalizado";
+    btnTirar.disabled = true;
+    btnPlantarse.disabled = true;
+    btnJugarDeNuevo.hidden = false;
+}
+
+// Vuelve todo al estado inicial para empezar una partida nueva
+function reiniciarPartida() {
+    // Variables del juego
+    dados = [0, 0, 0, 0, 0];
+    puntosTurno = 0;
+    puntajeJugador = 0;
+    puntajeComputadora = 0;
+    turno = "jugador";
+    yaTiro = false;
+
+    // Lo que se ve en pantalla
+    for (let dado of [dado1, dado2, dado3, dado4, dado5]) {
+        dado.textContent = "🎲";
+    }
+    puntajeTurno.textContent = puntosTurno;
+    puntajeJugadorHTML.textContent = "0 puntos";
+    puntajePCHTML.textContent = "0 puntos";
+    jugadorActualHTML.textContent = "Jugador";
+    mensajeJuego.textContent = "¡Comenzá tu turno!";
+
+    // Botones
+    btnTirar.disabled = false;
+    btnPlantarse.disabled = false;
+    btnJugarDeNuevo.hidden = true;
+}
+
+btnJugarDeNuevo.addEventListener("click", reiniciarPartida);
+
 function comprobarGanador() {
 
     if (puntajeJugador >= 10000) {
 
         mensajeJuego.textContent = "¡Ganaste! Llegaste a 10.000 puntos.";
-        turno = "finalizado";
+        terminarPartida();
 
         return true;
     }
@@ -230,7 +272,7 @@ function comprobarGanador() {
     if (puntajeComputadora >= 10000) {
 
         mensajeJuego.textContent = "¡Ganó la computadora!";
-        turno = "finalizado";
+        terminarPartida();
 
         return true;
     }
