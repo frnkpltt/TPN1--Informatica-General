@@ -48,43 +48,45 @@
     </section>
 
     <section class="seccionjuego">
-        <h2>Diez Mil</h2>
-        <div id="puntajes">
-            <div>
-                <h3>Jugador</h3>
-                <p id="puntajeJugador">0 puntos</p>
+        <div class="contenidojuego">
+            <h2>Diez Mil</h2>
+            <div id="puntajes">
+                <div>
+                    <h3>Jugador</h3>
+                    <p id="puntajeJugador">0 puntos</p>
+                </div>
+
+                <div>
+                    <h3>Computadora</h3> 
+                    <p id="puntajePC">0 puntos</p>
+                </div>
             </div>
 
-            <div>
-                <h3>Computadora</h3> 
-                <p id="puntajePC">0 puntos</p>
+            <div id="turno">
+                <p>Turno: <span id="jugadorActual">Jugador</span></p>
             </div>
-        </div>
 
-        <div id="turno">
-            <p>Turno: <span id="jugadorActual">Jugador</span></p>
-        </div>
+            <div class="dados">
+                <img class="dado" id="dado1" src="img/dados.png" alt="Dado sin tirar">
+                <img class="dado" id="dado2" src="img/dados.png" alt="Dado sin tirar">
+                <img class="dado" id="dado3" src="img/dados.png" alt="Dado sin tirar">
+                <img class="dado" id="dado4" src="img/dados.png" alt="Dado sin tirar">
+                <img class="dado" id="dado5" src="img/dados.png" alt="Dado sin tirar">
+            </div>
 
-        <div class="dados">
-            <img class="dado" id="dado1" src="img/dados.png" alt="Dado sin tirar">
-            <img class="dado" id="dado2" src="img/dados.png" alt="Dado sin tirar">
-            <img class="dado" id="dado3" src="img/dados.png" alt="Dado sin tirar">
-            <img class="dado" id="dado4" src="img/dados.png" alt="Dado sin tirar">
-            <img class="dado" id="dado5" src="img/dados.png" alt="Dado sin tirar">
-        </div>
-        
-        <div id="puntosTurno">
-            <p>Puntos del turno: <span id="puntajeTurno">0</span></p>
-        </div>
-        
-        <div id="acciones">
-            <button id="btnTirar">Tirar dados</button>
-            <button id="btnPlantarse">Plantarse</button>
-            <button id="btnJugarDeNuevo" hidden>Jugar de nuevo</button>
-        </div>
-        
-        <div id="mensajeJuego">
-            <p>¡Comenzá tu turno!</p>
+            <div id="puntosTurno">
+                <p>Puntos del turno: <span id="puntajeTurno">0</span></p>
+            </div>
+
+            <div id="acciones">
+                <button id="btnTirar">Tirar dados</button>
+                <button id="btnPlantarse">Plantarse</button>
+                <button id="btnJugarDeNuevo" hidden>Jugar de nuevo</button>
+            </div>
+
+            <div id="mensajeJuego">
+                <p>¡Comenzá tu turno!</p>
+            </div>
         </div>
 
     
