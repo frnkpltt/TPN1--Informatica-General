@@ -59,7 +59,7 @@ function guardarEnRankings(clave, puntajeNuevo) {
 
 // Si cambian los nombres de archivo o la carpeta, es lo único que hay
 // que tocar en el JS.
-const IMG_GIRANDO = "img/caras-dados/dado.png";
+const IMG_GIRANDO = "img/dados.png";
 
 // El índice 0 queda vacío a propósito: así CARAS_DADO[3] es directamente
 // la imagen del dado que muestra el 3, sin restar 1 cada vez.
