@@ -1,65 +1,24 @@
 /* ===========================================
    preg.js
    Juego "Cuanta calle tenés?" - categoria geografia
-
-   Cada pregunta es del tipo "¿A qué provincia pertenece la localidad
-   de X?" y se arma con datos reales de la API pública Georef.
-
-   Reglas:
-     - 3 opciones por pregunta y 20 segundos para responder.
-     - Si se acaba el tiempo, cuenta como error.
-     - La partida termina al llegar a la pregunta 15 o al acumular
-       3 errores (lo que pase primero).
-     - El puntaje es la cantidad de aciertos y se guarda en el top 5
-       ("recordPreguntas") al terminar la partida.
-
-   Estructura del archivo:
-     1. Variables del estado del juego
-     2. Referencias al DOM
-     3. Guardado del récord (localStorage)
-     4. Pregunta desde la API Georef (fetch)
-     5. Funciones auxiliares (buscar en un array, mezclar)
-     6. Contadores en pantalla y timer
-     7. Flujo del juego: cargar, responder, terminar, reiniciar, empezar
-     8. Eventos de los botones
    =========================================== */
-
 
 /* ---------- Variables globales del estado del juego ---------- */
 
-/* Guarda en qué pregunta estamos. */
 let rondaActual = 1;
-
-/* Cantidad total de preguntas del juego. */
 const totalRondas = 15;
 
-/* Cantidad de respuestas correctas e incorrectas. */
 let aciertos = 0;
 let errores = 0;
-
-/* El jugador pierde cuando llega a 3 errores. */
 const maxErrores = 3;
-
-/* Número de pregunta en el que termina la partida con éxito.
-   OJO: aunque el nombre dice "aciertos", en responder() se compara
-   contra rondaActual (en qué pregunta estamos), no contra la cantidad
-   de aciertos. Como vale 15, equivale a "llegar a la pregunta 15". */
 const metaAciertos = 15;
 
-/* Tiempo disponible para responder cada pregunta. */
 let tiempoRestante = 20;
-
-/* Guarda el intervalo del temporizador para poder detenerlo después. */
 let intervaloTimer = null;
 
-/* Guarda la pregunta que se está mostrando actualmente. */
 let preguntaActual = null;
 
-
 /* ---------- Referencias al DOM ---------- */
-
-/* Buscamos elementos del HTML mediante sus IDs.
-   querySelector permite seleccionar elementos del documento. */
 
 const pantallaInicio = document.querySelector("#pantalla-inicio");
 const btnEmpezarJuego = document.querySelector("#btn-empezar-juego");
@@ -80,498 +39,229 @@ const mensajeFinal = document.querySelector("#mensaje-final");
 const puntajeFinal = document.querySelector("#puntaje");
 const btnJugarDeNuevo = document.querySelector("#btn-jugar-de-nuevo");
 
-
-/* ---------- Guarda un puntaje en el top 5 histórico de localStorage ---------- */
-
-/* Esta función guarda los puntajes obtenidos por el jugador
-   en localStorage para que puedan aparecer después en Rankings. */
-
+/* ---------- Guarda un puntaje en el top 5 histórico de localStorage ----------
+   Misma función que en qesq.js (el juego de cartas) — cada script la
+   necesita por separado, no se comparte entre archivos. */
+ 
 function guardarEnRankings(clave, puntajeNuevo) {
-
-  /* Buscamos si ya existe un historial guardado.
-     JSON.parse convierte el texto guardado en un array.
-     Si no existe nada, usamos un array vacío. */
   const historial = JSON.parse(localStorage.getItem(clave) || '[]');
-
-  /* Agregamos el nuevo puntaje al historial. */
   historial.push(puntajeNuevo);
-
-  /* Ordenamos los puntajes de mayor a menor. */
-  historial.sort((a, b) => b - a);
-
-  /* Nos quedamos solamente con los 5 mejores. */
-  const top5 = historial.slice(0, 5);
-
-  /* Guardamos nuevamente el array en localStorage.
-     JSON.stringify convierte el array en texto para poder guardarlo. */
+  historial.sort((a, b) => b - a); // Orden descendente
+  const top5 = historial.slice(0, 5); // Solo los 5 mejores
   localStorage.setItem(clave, JSON.stringify(top5));
 }
 
-
 /* ---------- Trae una pregunta de geografia desde Georef ---------- */
 
-/* async permite que esta función trabaje con operaciones
-   que tardan en responder, como las consultas a una API. */
 async function obtenerPreguntaGeografia() {
-
   try {
-
-    /* Usamos fetch para pedir datos a la API de Georef.
-       En este caso pedimos 50 localidades con su provincia. */
-    const respuestaLocalidades = await fetch(
-      "https://apis.datos.gob.ar/georef/api/localidades?max=50&campos=nombre,provincia"
-    );
-
-    /* Convertimos la respuesta de la API de JSON a un objeto JavaScript. */
+    // Traemos 50 localidades al azar (con su provincia incluida)
+    const respuestaLocalidades = await fetch("https://apis.datos.gob.ar/georef/api/localidades?max=50&campos=nombre,provincia");
     const datosLocalidades = await respuestaLocalidades.json();
-
-    /* Guardamos solamente el array de localidades. */
     const localidades = datosLocalidades.localidades;
 
-
-    /* Elegimos una localidad al azar. */
+    // Elegimos UNA localidad al azar
     const indiceAlAzar = Math.floor(Math.random() * localidades.length);
-
     const localidadElegida = localidades[indiceAlAzar];
 
-
-    /* Obtenemos el nombre de la localidad y su provincia correcta. */
     const nombreLocalidad = localidadElegida.nombre;
     const provinciaCorrecta = localidadElegida.provincia.nombre;
 
-
-    /* Hacemos otra consulta a la API.
-       Esta vez obtenemos todas las provincias para poder
-       crear las respuestas incorrectas. */
-    const respuestaProvincias = await fetch(
-      "https://apis.datos.gob.ar/georef/api/provincias?campos=nombre"
-    );
-
-    const datosProvincias = await respuestaProvincias.json();
-
-    const provincias = datosProvincias.provincias;
-
-
-    /* Array donde vamos a guardar las dos provincias incorrectas. */
-    const incorrectas = [];
-
-
-    /* Repetimos hasta conseguir dos opciones incorrectas. */
-    while (incorrectas.length < 2) {
-
-      /* Elegimos una provincia al azar. */
-      const indiceProvincia = Math.floor(
-        Math.random() * provincias.length
-      );
-
-      const nombreProvincia = provincias[indiceProvincia].nombre;
-
-
-      /* Comprobamos que la provincia no sea la correcta
-         y que tampoco esté repetida. */
-      if (
-        nombreProvincia !== provinciaCorrecta &&
-        !estaEnArray(nombreProvincia, incorrectas)
-      ) {
-        incorrectas.push(nombreProvincia);
-      }
-    }
-
-
-    /* Creamos un objeto que representa la pregunta.
-       Tiene el texto, la respuesta correcta y las tres opciones. */
-    const pregunta = {
-      texto:
-        "¿A qué provincia pertenece la localidad de " +
-        nombreLocalidad + "?",
-
-      correcta: provinciaCorrecta,
-
-      opciones: [
-        provinciaCorrecta,
-        incorrectas[0],
-        incorrectas[1]
-      ]
-    };
-
-
-    /* Devolvemos el objeto pregunta para poder utilizarlo
-       en otras funciones. */
-    return pregunta;
-
-
-  } catch (error) {
-
-    /* Si ocurre algún error con la conexión o con la API,
-       mostramos el error en la consola y devolvemos null. */
-    console.log("Error al obtener la pregunta:", error);
-
-    return null;
-  }
-}
-
-
-/* ---------- Chequea si un valor ya esta en un array ---------- */
-
-/* Esta función comprueba si un determinado valor
-   ya existe dentro de un array. */
-function estaEnArray(valor, array) {
-
-  /* Recorremos todos los elementos del array. */
-  for (let i = 0; i < array.length; i++) {
-
-    /* Si encontramos el valor, devolvemos true. */
-    if (array[i] === valor) {
-      return true;
-    }
-  }
-
-  /* Si terminamos el recorrido sin encontrarlo,
-     devolvemos false. */
-  return false;
-}
-
-
-/* ---------- Mezcla un array ---------- */
-
-/* Esta función mezcla las opciones de respuesta
-   para que la correcta no aparezca siempre primero. */
-function mezclarArray(array) {
-
-  /* Array donde vamos a guardar las opciones mezcladas. */
-  const resultado = [];
-
-  /* Guarda los índices que ya utilizamos,
-     para evitar repetir opciones. */
-  const indicesUsados = [];
-
-
-  /* Seguimos mezclando hasta tener la misma cantidad
-     de elementos que tenía el array original. */
-  while (resultado.length < array.length) {
-
-    /* Elegimos un índice al azar. */
-    const indice = Math.floor(
-      Math.random() * array.length
-    );
-
-
-    /* Comprobamos que ese índice no haya sido utilizado. */
-    if (!estaEnArray(indice, indicesUsados)) {
-
-      /* Guardamos el índice como utilizado. */
-      indicesUsados.push(indice);
-
-      /* Agregamos la opción correspondiente al resultado. */
-      resultado.push(array[indice]);
-    }
-  }
-
-
-  /* Devolvemos el array mezclado. */
-  return resultado;
-}
-
-
-/* ---------- Actualiza los contadores en pantalla ---------- */
-
-/* Actualiza la información que ve el jugador
-   sobre la pregunta actual y los errores. */
-function actualizarContadores() {
-
-  /* Muestra en qué pregunta estamos. */
-  contadorRonda.innerText =
-    "Pregunta " + rondaActual + " de " + totalRondas;
-
-  /* Muestra la cantidad de errores acumulados. */
-  contadorErrores.innerText =
-    "Errores: " + errores + " / " + maxErrores;
-}
-
-
-/* ---------- Timer de cada pregunta ---------- */
-
-/* Inicia el contador de 20 segundos. */
-function iniciarTimer() {
-
-  /* Reiniciamos el tiempo a 20 segundos. */
-  tiempoRestante = 20;
-
-  /* Mostramos el tiempo inicial en pantalla. */
-  timerTexto.innerText =
-    "Tiempo: " + tiempoRestante;
-
-
-  /* setInterval ejecuta una función cada determinada cantidad
-     de milisegundos. En este caso, cada 1000 ms = 1 segundo. */
-  intervaloTimer = setInterval(function () {
-
-    /* Restamos un segundo. */
-    tiempoRestante = tiempoRestante - 1;
-
-    /* Actualizamos el texto del contador. */
-    timerTexto.innerText =
-      "Tiempo: " + tiempoRestante;
-
-
-    /* Si llega a cero, detenemos el intervalo
-       y contamos la respuesta como incorrecta: responder(null)
-       simula una respuesta vacía, que nunca coincide con la correcta. */
-    if (tiempoRestante <= 0) {
-
-      clearInterval(intervaloTimer);
-
-      responder(null);
-    }
-
-  }, 1000);
-}
-
-
-/* ---------- Carga y muestra una pregunta nueva ---------- */
-
-/* Esta función obtiene una nueva pregunta
-   y la muestra en pantalla. */
-async function cargarPregunta() {
-
-  /* Mientras esperamos la respuesta de la API,
-     mostramos un mensaje de carga. */
-  textoPregunta.innerText =
-    "Cargando pregunta...";
-
-
-  /* Esperamos a que la API nos devuelva una pregunta. */
-  preguntaActual =
-    await obtenerPreguntaGeografia();
-
-
-  /* Si la API falló, mostramos un mensaje de error
-     y no iniciamos el temporizador. */
-  if (preguntaActual === null) {
-
-    textoPregunta.innerText =
-      "No se pudo cargar la pregunta. Revisá tu conexión e intentá de nuevo.";
-
-    opcion0.innerText = "";
-    opcion1.innerText = "";
-    opcion2.innerText = "";
-
-    return;
-  }
-
-
-  /* Mezclamos las tres opciones para que
-     la respuesta correcta no aparezca siempre en el mismo lugar. */
-  const opcionesMezcladas =
-    mezclarArray(preguntaActual.opciones);
-
-
-  /* Mostramos el texto de la pregunta. */
-  textoPregunta.innerText =
-    preguntaActual.texto;
-
-
-  /* Mostramos las tres opciones mezcladas. */
-  opcion0.innerText = opcionesMezcladas[0];
-  opcion1.innerText = opcionesMezcladas[1];
-  opcion2.innerText = opcionesMezcladas[2];
-
-
-  /* Una vez cargada la pregunta, comienza el contador. */
-  iniciarTimer();
-}
-
-
-/* ---------- Procesa la respuesta del jugador ---------- */
-
-/* Esta función se ejecuta cuando el jugador
-   elige una de las tres opciones. */
-function responder(opcionElegida) {
-
-  /* Detenemos el timer porque ya se respondió. */
-  clearInterval(intervaloTimer);
-
-
-  /* Comparamos la respuesta elegida
-     con la respuesta correcta de la pregunta actual. */
-  if (opcionElegida === preguntaActual.correcta) {
-
-    /* Si coincide, sumamos un acierto. */
-    aciertos = aciertos + 1;
-
-  } else {
-
-    /* Si no coincide, sumamos un error. */
-    errores = errores + 1;
-  }
-
-
-  /* Actualizamos los contadores que aparecen en pantalla. */
-  actualizarContadores();
-
-
-  /* Si llegó a 3 errores, termina el juego como perdido. */
-  if (errores >= maxErrores) {
-
-    terminarJuego(false);
-
-
-  /* Si ya se respondió la pregunta número 15 (y no llegó a 3 errores),
-     termina el juego como completado. Ojo: se compara la ronda en la que
-     está (rondaActual), no los aciertos, así que se puede completar la
-     partida habiendo cometido hasta 2 errores. */
-  } else if (rondaActual >= metaAciertos) {
-
-    terminarJuego(true);
-
-
-  /* Si todavía puede continuar,
-     pasamos a la siguiente pregunta. */
-  } else {
-
-    rondaActual = rondaActual + 1;
-
-    cargarPregunta();
-  }
-}
-
-
-/* ---------- Pantalla de fin de juego ---------- */
-
-/* Esta función muestra el resultado final.
-   "completo" indica si el juego terminó por completar
-   las preguntas o por quedarse sin intentos. */
-function terminarJuego(completo) {
-
-  /* Ocultamos la parte del juego. */
-  estadoJuegoDiv.hidden = true;
-
-  /* Ocultamos la pregunta actual. */
-  preguntaActualDiv.hidden = true;
-
-  /* Mostramos la pantalla de resultado. */
-  resultadoFinalDiv.hidden = false;
-
-
-  /* Mostramos la cantidad de aciertos obtenidos. */
-  puntajeFinal.innerText = aciertos;
-
-
-  /* Si completó las 15 preguntas y acertó todas,
-     mostramos el mensaje de mejor resultado. */
-  if (completo && aciertos === totalRondas) {
-
-    mensajeFinal.innerText =
-      "¡Completaste las 15 preguntas! Tenés un montón de calle, seguí pateándola.";
-
-
-  /* Si completó las 15 pero tuvo algunos errores,
-     mostramos un mensaje diferente. */
-  } else if (completo) {
-
-    mensajeFinal.innerText =
-      "¡Completaste las 15 preguntas, pero te falta calle! Seguí pateándola.";
-
-
-  /* Si perdió por llegar a 3 errores,
-     mostramos el mensaje correspondiente. */
-  } else {
-
-    mensajeFinal.innerText =
-      "Te quedaste sin intentos. Te falta calle!!!";
-  }
-
-
-  /* Guardamos el puntaje obtenido en el ranking. */
-  guardarEnRankings("recordPreguntas", aciertos);
-}
-
-
-/* ---------- Reinicia el juego desde cero ---------- */
-
-/* Vuelve todos los valores del juego a su estado inicial. */
-function reiniciarJuego() {
-
-  /* Reiniciamos la pregunta. */
-  rondaActual = 1;
-
-  /* Reiniciamos los aciertos y errores. */
-  aciertos = 0;
-  errores = 0;
-
-
-  /* Ocultamos el resultado final. */
-  resultadoFinalDiv.hidden = true;
-
-  /* Volvemos a mostrar el juego. */
-  estadoJuegoDiv.hidden = false;
-  preguntaActualDiv.hidden = false;
-
-
-  /* Actualizamos los contadores. */
-  actualizarContadores();
-
-  /* Cargamos una nueva pregunta. */
-  cargarPregunta();
-}
-
-
-/* ---------- Arranca el juego cuando se toca "Empezar a jugar" ---------- */
-
-/* Esta función inicia el juego por primera vez. */
-function empezarJuego() {
-
-  /* Ocultamos la pantalla inicial. */
-  pantallaInicio.hidden = true;
-
-  /* Mostramos el juego. */
-  estadoJuegoDiv.hidden = false;
-  preguntaActualDiv.hidden = false;
-
-
-  /* Actualizamos los contadores. */
-  actualizarContadores();
-
-  /* Cargamos la primera pregunta. */
-  cargarPregunta();
-}
-
-
-/* ---------- Evento del botón "Empezar a jugar" ---------- */
-
-/* addEventListener permite detectar una acción del usuario.
-   En este caso, cuando hace click en el botón,
-   se ejecuta empezarJuego. */
-btnEmpezarJuego.addEventListener(
-  "click",
-  empezarJuego
-);
-
-
-/* ---------- Eventos de los botones de opciones ---------- */
-
-/* Cuando se hace click en la primera opción,
-   enviamos su texto a la función responder. */
-opcion0.addEventListener("click", function () {
-  responder(opcion0.innerText);
-});
-
-
-/* Lo mismo para la segunda opción. */
-opcion1.addEventListener("click", function () {
-  responder(opcion1.innerText);
-});
-
-
-/* Y para la tercera opción. */
-opcion2.addEventListener("click", function () {
-  responder(opcion2.innerText);
-});
-
-
-/* Cuando se hace click en "Jugar de nuevo",
-   reiniciamos completamente el juego. */
-btnJugarDeNuevo.addEventListener(
-  "click",
-  reiniciarJuego
-);
+    // Traemos la lista de provincias para armar las 2 opciones incorrectas
+    const respuestaProvincias = await fetch("https://apis.datos.gob.ar/georef/api/provincias?campos=nombre"); 
+    const datosProvincias = await respuestaProvincias.json(); 
+    const provincias = datosProvincias.provincias; 
+ 
+    const incorrectas = []; 
+    while (incorrectas.length < 2) { 
+      const indiceProvincia = Math.floor(Math.random() * provincias.length); 
+      const nombreProvincia = provincias[indiceProvincia].nombre; 
+ 
+      if (nombreProvincia !== provinciaCorrecta && !estaEnArray(nombreProvincia, incorrectas)) { 
+        incorrectas.push(nombreProvincia); 
+      } 
+    } 
+ 
+    const pregunta = { 
+      texto: "¿A qué provincia pertenece la localidad de " + nombreLocalidad + "?", 
+      correcta: provinciaCorrecta, 
+      opciones: [provinciaCorrecta, incorrectas[0], incorrectas[1]] 
+    }; 
+ 
+    return pregunta; 
+ 
+  } catch (error) { 
+    // Si falla la conexion o la API no responde, avisamos y devolvemos null 
+    console.log("Error al obtener la pregunta:", error); 
+    return null; 
+  } 
+} 
+ 
+/* ---------- Chequea si un valor ya esta en un array (reemplaza a includes) ---------- */ 
+ 
+function estaEnArray(valor, array) { 
+  for (let i = 0; i < array.length; i++) { 
+    if (array[i] === valor) { 
+      return true; 
+    } 
+  } 
+  return false; 
+} 
+ 
+/* ---------- Mezcla un array (para que la correcta no este siempre primera) ---------- */ 
+ 
+function mezclarArray(array) { 
+  const resultado = []; 
+  const indicesUsados = []; 
+ 
+  while (resultado.length < array.length) { 
+    const indice = Math.floor(Math.random() * array.length); 
+ 
+    if (!estaEnArray(indice, indicesUsados)) { 
+      indicesUsados.push(indice); 
+      resultado.push(array[indice]); 
+    } 
+  } 
+ 
+  return resultado; 
+} 
+ 
+/* ---------- Actualiza los contadores en pantalla ---------- */ 
+ 
+function actualizarContadores() { 
+  contadorRonda.innerText = "Pregunta " + rondaActual + " de " + totalRondas; 
+  contadorErrores.innerText = "Errores: " + errores + " / " + maxErrores; 
+} 
+ 
+/* ---------- Timer de cada pregunta ---------- */ 
+ 
+function iniciarTimer() { 
+  tiempoRestante = 20; 
+  timerTexto.innerText = "Tiempo: " + tiempoRestante; 
+ 
+  intervaloTimer = setInterval(function () { 
+    tiempoRestante = tiempoRestante - 1; 
+    timerTexto.innerText = "Tiempo: " + tiempoRestante; 
+ 
+    // Si se acaba el tiempo, se responde como si hubiera fallado 
+    if (tiempoRestante <= 0) { 
+      clearInterval(intervaloTimer); 
+      responder(null); 
+    } 
+  }, 1000); 
+} 
+ 
+/* ---------- Carga y muestra una pregunta nueva ---------- */ 
+ 
+async function cargarPregunta() { 
+  textoPregunta.innerText = "Cargando pregunta..."; 
+ 
+  preguntaActual = await obtenerPreguntaGeografia(); 
+ 
+  // Si la API fallo (obtenerPreguntaGeografia devolvio null), 
+  // avisamos al usuario y no arrancamos el timer 
+  if (preguntaActual === null) { 
+    textoPregunta.innerText = "No se pudo cargar la pregunta. Revisá tu conexión e intentá de nuevo."; 
+    opcion0.innerText = ""; 
+    opcion1.innerText = ""; 
+    opcion2.innerText = ""; 
+    return; 
+  } 
+ 
+  const opcionesMezcladas = mezclarArray(preguntaActual.opciones); 
+ 
+  textoPregunta.innerText = preguntaActual.texto; 
+  opcion0.innerText = opcionesMezcladas[0]; 
+  opcion1.innerText = opcionesMezcladas[1]; 
+  opcion2.innerText = opcionesMezcladas[2]; 
+ 
+  iniciarTimer(); 
+} 
+ 
+/* ---------- Procesa la respuesta del jugador ---------- */ 
+ 
+function responder(opcionElegida) { 
+  clearInterval(intervaloTimer); 
+ 
+  if (opcionElegida === preguntaActual.correcta) { 
+    aciertos = aciertos + 1; 
+  } else { 
+    errores = errores + 1; 
+  } 
+ 
+  actualizarContadores(); 
+ 
+  if (errores >= maxErrores) { 
+    terminarJuego(false); 
+  } else if (rondaActual >= metaAciertos) { 
+    terminarJuego(true); 
+  } else { 
+    rondaActual = rondaActual + 1; 
+    cargarPregunta(); 
+  } 
+} 
+ 
+/* ---------- Pantalla de fin de juego ---------- */ 
+ 
+function terminarJuego(completo) { 
+  estadoJuegoDiv.hidden = true; 
+  preguntaActualDiv.hidden = true; 
+  resultadoFinalDiv.hidden = false; 
+ 
+  puntajeFinal.innerText = aciertos; 
+ 
+  if (completo && aciertos === totalRondas) { 
+    mensajeFinal.innerText = "¡Completaste las 15 preguntas! Tenés un montón de calle, seguí pateándola."; 
+  } else if (completo) { 
+    mensajeFinal.innerText = "¡Completaste las 15 preguntas, pero te falta calle! Seguí pateándola."; 
+  } else { 
+    mensajeFinal.innerText = "Te quedaste sin intentos. Te falta calle!!!"; 
+  } 
+ 
+  // Guarda este puntaje en el top 5 histórico (reemplaza el récord único viejo) 
+  guardarEnRankings("recordPreguntas", aciertos); 
+} 
+ 
+/* ---------- Reinicia el juego desde cero ---------- */ 
+ 
+function reiniciarJuego() { 
+  rondaActual = 1; 
+  aciertos = 0; 
+  errores = 0; 
+ 
+  resultadoFinalDiv.hidden = true; 
+  estadoJuegoDiv.hidden = false; 
+  preguntaActualDiv.hidden = false; 
+ 
+  actualizarContadores(); 
+  cargarPregunta(); 
+} 
+ 
+/* ---------- Arranca el juego cuando se toca "Empezar a jugar" ---------- */ 
+ 
+function empezarJuego() { 
+  pantallaInicio.hidden = true; 
+  estadoJuegoDiv.hidden = false; 
+  preguntaActualDiv.hidden = false; 
+ 
+  actualizarContadores(); 
+  cargarPregunta(); 
+} 
+ 
+btnEmpezarJuego.addEventListener("click", empezarJuego); 
+ 
+/* ---------- Eventos de los botones de opciones ---------- */ 
+ 
+opcion0.addEventListener("click", function () { 
+  responder(opcion0.innerText); 
+}); 
+ 
+opcion1.addEventListener("click", function () { 
+  responder(opcion1.innerText); 
+}); 
+ 
+opcion2.addEventListener("click", function () { 
+  responder(opcion2.innerText); 
+}); 
+ 
+btnJugarDeNuevo.addEventListener("click", reiniciarJuego); 
