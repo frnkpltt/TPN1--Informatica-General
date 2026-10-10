@@ -1,18 +1,49 @@
 <!DOCTYPE html>
 <html lang="es">
+<!--
+  index.html: página de inicio del sitio.
+  Presenta el sitio con un texto sobre la identidad argentina y muestra una
+  tarjeta por cada juego (Quién es Quién, ¿Cuánta calle tenés? y Diez Mil)
+  con un botón que lleva a su página.
+
+  Todas las páginas del sitio comparten la misma estructura:
+    <header>  título curvo + menú de navegación
+    <main>    contenido propio de la página
+-->
 <head>
+    <!-- Codificación de caracteres: necesaria para que se vean bien las
+         tildes y la ñ -->
     <meta charset="UTF-8">
+    <!-- Hace que la página se adapte al ancho real de la pantalla (celulares) -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Título que se ve en la pestaña del navegador -->
     <title>Inicio</title>
+    <!-- Única hoja de estilos del sitio: es la misma en todas las páginas -->
     <link rel="stylesheet" href="css/estetica.css">
+    <!-- Tipografías de Google Fonts: Milonga (títulos) y Arvo (menú y textos).
+         preconnect le avisa al navegador que se va a conectar a ese servidor,
+         para que las fuentes carguen más rápido. El segundo link ya incluye
+         Milonga, así que el primero es redundante. -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Milonga&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Arvo:wght@400;700&family=Milonga&display=swap" rel="stylesheet">
 </head>
 
 <body>
+   <!-- Contenedor principal: centra todo el contenido y le da el fondo azul
+        (ver .contenedor en estetica.css) -->
    <div class="contenedor">
     <header>
+       <!-- Título del sitio: es un SVG con el texto siguiendo una curva.
+            - viewBox define el sistema de coordenadas del dibujo, así se
+              escala sin deformarse.
+            - El <path> dibuja la curva: M 50 100 es el punto de partida y
+              Q 400 20 750 100 es una curva cuyo punto de control (400, 20)
+              la combea hacia arriba hasta llegar a (750, 100).
+            - <textPath> hace que el texto siga esa curva (href="#curva-titulo"
+              apunta al id del path). startOffset="50%" y text-anchor="middle"
+              lo centran sobre la curva.
+            Los estilos (fuente, color) están en .titulo-curvo de estetica.css. -->
        <svg viewBox="0 0 800 150" class="titulo-curvo">
   <defs>
     <path id="curva-titulo" d="M 50 100 Q 400 20 750 100" />
@@ -24,6 +55,9 @@
   </text>
 </svg>
 
+        <!-- Menú de navegación: es igual en todas las páginas. La lista se
+             muestra en fila gracias a Flexbox (nav ul en estetica.css). A los
+             juegos se llega desde las tarjetas de más abajo. -->
         <nav>
             <ul>
                 <li><a href="index.html">Inicio</a></li>
@@ -33,8 +67,11 @@
         </nav>
     </header>
 
+<!-- Contenido principal de la página -->
 <main>
 
+<!-- Presentación del sitio: la identidad argentina es la temática de todo el
+     proyecto. La clase "intro" le da el estilo (ver .intro en estetica.css) -->
 <section class="intro">
   <p>Ser argentino implica formar parte de una historia, una geografía y una cultura que nos atraviesan, 
     muchas veces sin que lo notemos del todo. Desde los hechos que marcaron nuestro pasado hasta la enorme diversidad de paisajes 
@@ -50,38 +87,41 @@ Conocerla en su diversidad, más que reducirla a una sola imagen, es también un
 </section>
 
 <!--
-  antes este bloque estaba partido en 3 <article> que podian ser compactados en section con cada article
-  como tarjeta de juego.Quedó como un solo <article> por juego,
-  con todo adentro (título + imagen + botón). Para sumar los otros dos
-  juegos, se duplica este mismo <article class="tarjeta-juego"> y se
-  cambia el h2, el src/alt de la imagen y el href del link.
+  Tarjetas de los tres juegos. Cada juego es UN solo <article> con todo
+  adentro: título (h2), imagen y botón de enlace (clase "boton-jugar").
+  Para sumar un juego se duplica un <article class="tarjeta-juego"> y se
+  cambian el h2, el src/alt de la imagen y el href del enlace.
+  El alt de cada imagen describe qué muestra (accesibilidad).
 -->
 <section class="juegos">
 
+  <!-- Juego de cartas (página quienes.html) -->
   <article class="tarjeta-juego">
-    <h2>Juego de Cartas</h2>
-    <img src="img/cartas.webp" alt="Cartas del juego de Quién es Quién">
+  <h2>Quién es Quién</h2>
+    <img src="img/cartas.png" alt="Cartas del juego de Quién es Quién">
     <a href="quienes.html" class="boton-jugar">Click para jugar</a>
   </article>
 
-  <!-- TODO: acá van los otros dos <article class="tarjeta-juego"> (dados y preguntas) cuando estén listos -->
-
+  <!-- Juego de preguntas (página preguntas.html) -->
      <article class="tarjeta-juego">
-    <h2>Juego de Preguntas</h2>
+    <h2>Cuanta calle tenés?</h2>
     <img src="img/preg.png" alt="Imagen del juego de preguntas">
     <a href="preguntas.html" class="boton-jugar">Click para jugar</a>
   </article>
 
+  <!-- Juego de dados (página diezmil.html) -->
   <article class="tarjeta-juego">
-    <h2>Juego de Dados/Diezmil</h2>
-    <img src="img/dados.webp" alt="Imagen del juego de dados">
+    <h2>Diezmil</h2>
+    <img src="img/dados.png" alt="Imagen del juego de dados">
     <a href="diezmil.html" class="boton-jugar">Click para jugar</a>
   </article>
 
 </section>
 
 </main>
-
+<footer>
+    <p>¡Gracias por visitar nuestra página!</p>
+</footer>
 </div>
 
 </body>
