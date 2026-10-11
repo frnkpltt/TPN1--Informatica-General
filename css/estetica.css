@@ -102,6 +102,7 @@ nav ul {
   justify-content: center;
   gap: 4rem;
   list-style: none;
+    flex-wrap: wrap;
 }
 
 nav a {
@@ -126,6 +127,35 @@ nav a:active {
   background-color: #f6b40e;
   color: #660503;
 }
+/* Desplegable de juegos: el <li> es la referencia
+   para posicionar el submenú justo debajo. */
+.menu-juegos {
+  position: relative;
+}
+
+/* El submenú está oculto hasta que se pasa el mouse. */
+nav .submenu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 10;
+  padding: 0.5rem 1rem;
+  background-color: #660503;
+  border-radius: 0 0 10px 10px;
+  white-space: nowrap;
+}
+
+/* Al pasar el mouse por el <li> "Juegos", aparece el submenú. */
+nav .menu-juegos:hover .submenu {
+  display: block;
+}
+
+/* Cada opción del submenú va en su propia línea. */
+nav .submenu li {
+  margin: 0.3rem 0;
+}
+
 
 /* ============================================================
    SECCION DE INTRODUCCION Y SECTIONS GENERICAS
@@ -392,7 +422,7 @@ article img {
 
 .reglas p {
   font-family: "Arvo", serif;
-  color: #660503;
+  color: #d5c7c7;
   margin-top: 20px;
   font-weight: 700;
 }
@@ -400,7 +430,8 @@ article img {
 .reglas h2 {
   font-family: "Arvo", serif;
   color: #1b4a73;
-  text-decoration: underline;
+  background-color: #f6b40e;
+  
 }
 
 .preguntas,
@@ -566,12 +597,45 @@ select {
    JUEGO DE PREGUNTAS: CUANTA CALLE TENES?
    ============================================================ */
 
+/* ---------- Barra de estado ---------- */
+
+/* Tira de tres celdas iguales con borde amarillo, como las
+   tarjetas de juego. overflow: hidden hace que la celda del
+   tiempo respete las esquinas redondeadas de la tira. */
 #estado-juego {
-  border: 3px solid #f6b40e;
+  display: flex;
+  width: 100%;
+  max-width: 40rem;
+  background-color: #660503;
+  border: 2px solid #f6b40e;
   border-radius: 8px;
-  padding: 1.5rem;
-  margin-top: 1.5rem;
+  overflow: hidden;
+  font-size: 1.1rem;
+}
+
+/* Cada dato ocupa un tercio y queda centrado en su celda. */
+#estado-juego p {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.8rem 0.5rem;
   text-align: center;
+  font-family: "Milonga", serif;
+}
+
+/* Línea fina amarilla entre celda y celda. */
+#estado-juego p + p {
+  border-left: 2px solid #f6b40e;
+}
+
+/* El tiempo es el dato clave: colores invertidos (como el botón
+   al hacer click) y letra más grande. */
+#estado-juego #timer {
+  flex: 1.2;
+  background-color: #f6b40e;
+  color: #660503;
+  font-size: 1.1rem;
 }
 
 #pregunta-actual {
@@ -600,4 +664,13 @@ select {
 
 #btn-jugar-de-nuevo {
   margin-top: 1rem;
+}
+
+#texto-pregunta {
+  font-family: "Milonga", serif;
+  color: #f0ce75;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  text-align: center;
+  padding: 20px;
 }

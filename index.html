@@ -58,13 +58,21 @@
         <!-- Menú de navegación: es igual en todas las páginas. La lista se
              muestra en fila gracias a Flexbox (nav ul en estetica.css). A los
              juegos se llega desde las tarjetas de más abajo. -->
-        <nav>
-            <ul>
-                <li><a href="index.html">Inicio</a></li>
-                <li><a href="integrantes.html">Integrantes</a></li>
-                <li><a href="ranking.html">Rankings</a></li>
+       <nav>
+    <ul>
+        <li><a href="index.html">Inicio</a></li>
+        <li class="menu-juegos">
+            <a href="index.html#juegos">Juegos</a>
+            <ul class="submenu">
+                <li><a href="quienes.html">Quién es Quién</a></li>
+                <li><a href="diezmil.html">Diez Mil</a></li>
+                <li><a href="preguntas.html">¿Cuánta calle tenés?</a></li>
             </ul>
-        </nav>
+        </li>
+        <li><a href="ranking.html">Rankings</a></li>
+        <li><a href="integrantes.html">Integrantes</a></li>
+    </ul>
+</nav>
     </header>
 
 <!-- Contenido principal de la página -->
